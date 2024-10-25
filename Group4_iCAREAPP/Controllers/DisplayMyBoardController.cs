@@ -18,6 +18,14 @@ namespace Group4_iCAREAPP.Controllers
         public ActionResult Index()
         {
             var patientRecord = db.PatientRecord.Include(p => p.DocumentMetadata).Include(p => p.GeoCodes).Include(p => p.iCareWorker).Include(p => p.ModificationHistory);
+            var userId = User.Identity.Name; // Replace this with the correct way to get the user ID
+
+            // Pass the user ID to the view for the message to be displayed at the top of the index of displayMyBoard
+            ViewBag.UserId = userId;
+
+            //need to get the patients related to the userId here
+
+
             return View(patientRecord.ToList());
         }
 
@@ -140,5 +148,7 @@ namespace Group4_iCAREAPP.Controllers
             }
             base.Dispose(disposing);
         }
+  
+
     }
 }

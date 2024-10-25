@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<Group4_iCAREAPP.Models.PatientRecord>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "My iCARE Board";
 }
 
-<h2>Index</h2>
+<h2>iCARE Board</h2>
+
+<h2>@ViewBag.UserId's iCARE Board:</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <!-- @Html.ActionLink("Create New", "Create") -->
 </p>
 <table class="table">
     <tr>
@@ -50,50 +52,51 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dateOfBirth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.height)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.bloodGroup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.bedID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.treatmentArea)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DocumentMetadata.userID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GeoCodes.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.iCareWorker.profession)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModificationHistory.description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bloodGroup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bedID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.treatmentArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentMetadata.userID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeoCodes.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.iCareWorker.profession)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationHistory.description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>

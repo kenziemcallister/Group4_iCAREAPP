@@ -26,5 +26,7 @@ namespace Group4_iCAREAPP.Controllers
 
             return View();
         }
+
+        
     }
 }

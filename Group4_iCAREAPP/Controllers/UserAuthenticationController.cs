@@ -156,6 +156,9 @@ namespace Group4_iCAREAPP.Controllers
 
                 if (isAuthenticated)
                 {
+
+                    TempData["LoginMessage"] = $"Login successful. Welcome to iCARE, {model.ID}!"; //success message to display on the home page. see home page index html file for other part
+
                     FormsAuthentication.SetAuthCookie(model.ID, false);
                     return RedirectToAction("Index", "Home"); //if yes, redirect back to home
 
@@ -169,6 +172,7 @@ namespace Group4_iCAREAPP.Controllers
             return View(model);
         }
 
+        //helper function for making sure the password is the right password for the user
         private bool AuthenticateUser(string id, string password)
         {
 
@@ -182,6 +186,18 @@ namespace Group4_iCAREAPP.Controllers
                 return false;
             }
 
+        }
+
+        //Logout code below for controller
+        public ActionResult Logout()
+        {
+            // Clear the authentication cookie and session
+            FormsAuthentication.SignOut();
+            Session.Clear();  // Clear all session data
+
+            TempData["LogoutMessage"] = $"Logout successful."; 
+
+            return RedirectToAction("Index", "Home");
         }
 
     }

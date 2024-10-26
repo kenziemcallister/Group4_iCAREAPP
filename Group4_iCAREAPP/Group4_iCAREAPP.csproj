@@ -309,12 +309,12 @@
     <Content Include="Views\ManagePatient\Details.cshtml" />
     <Content Include="Views\ManagePatient\Edit.cshtml" />
     <Content Include="Views\ManagePatient\Index.cshtml" />
+    <Content Include="Views\UserAuthentication\Login.cshtml" />
     <Content Include="Views\ManageWorker\Create.cshtml" />
     <Content Include="Views\ManageWorker\Delete.cshtml" />
     <Content Include="Views\ManageWorker\Details.cshtml" />
     <Content Include="Views\ManageWorker\Edit.cshtml" />
     <Content Include="Views\ManageWorker\Index.cshtml" />
-    <Content Include="Views\UserAuthentication\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

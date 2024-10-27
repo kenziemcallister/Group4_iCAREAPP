@@ -102,15 +102,15 @@ namespace Group4_iCAREAPP.Controllers
         // GET: UserAuthentication/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            /*if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            }*/
             iCareUser iCareUser = db.iCareUser.Find(id);
-            if (iCareUser == null)
+            /*if (iCareUser == null)
             {
                 return HttpNotFound();
-            }
+            }*/
             return View(iCareUser);
         }
 

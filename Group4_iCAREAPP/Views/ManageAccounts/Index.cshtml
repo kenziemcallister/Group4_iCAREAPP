@@ -7,7 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <!--@Html.ActionLink("Create New", "Create")-->
+    <button type="button" onclick="location.href='@Url.Action("Create", "ManageAccounts")'">Create New Admin</button>
+</p>
+
+<p>
+    <button type="button" onclick="location.href='@Url.Action("Create", "ManageWorker")'">Create New Worker</button>
 </p>
 <table class="table">
     <tr>

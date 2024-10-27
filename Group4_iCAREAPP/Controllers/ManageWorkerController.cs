@@ -39,8 +39,12 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ManageWorker/Create
         public ActionResult Create()
         {
+            ViewBag.ID = new SelectList(db.iCareUser, "ID", "ID"); // Populate dropdown with iCareUser IDs
             ViewBag.creator = new SelectList(db.iCareAdmin, "ID", "ID");
             ViewBag.userPermission = new SelectList(db.UserRole, "roleID", "roleName");
+            ViewBag.profession = new SelectList(new List<string> { "Doctor", "Nurse" });
+
+
             return View();
         }
 
@@ -58,8 +62,11 @@ namespace Group4_iCAREAPP.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ID = new SelectList(db.iCareUser, "ID", "ID", iCareWorker.ID); // Repopulate dropdown on error
             ViewBag.creator = new SelectList(db.iCareAdmin, "ID", "ID", iCareWorker.creator);
             ViewBag.userPermission = new SelectList(db.UserRole, "roleID", "roleName", iCareWorker.userPermission);
+            ViewBag.profession = new SelectList(new List<string> { "Doctor", "Nurse" }, iCareWorker.profession); // Repopulate profession dropdown
+
             return View(iCareWorker);
         }
 
@@ -77,6 +84,7 @@ namespace Group4_iCAREAPP.Controllers
             }
             ViewBag.creator = new SelectList(db.iCareAdmin, "ID", "ID", iCareWorker.creator);
             ViewBag.userPermission = new SelectList(db.UserRole, "roleID", "roleName", iCareWorker.userPermission);
+            ViewBag.profession = new SelectList(new List<string> { "Doctor", "Nurse" }, iCareWorker.profession);
             return View(iCareWorker);
         }
 
@@ -95,6 +103,7 @@ namespace Group4_iCAREAPP.Controllers
             }
             ViewBag.creator = new SelectList(db.iCareAdmin, "ID", "ID", iCareWorker.creator);
             ViewBag.userPermission = new SelectList(db.UserRole, "roleID", "roleName", iCareWorker.userPermission);
+            ViewBag.profession = new SelectList(new List<string> { "Doctor", "Nurse" }, iCareWorker.profession);
             return View(iCareWorker);
         }
 

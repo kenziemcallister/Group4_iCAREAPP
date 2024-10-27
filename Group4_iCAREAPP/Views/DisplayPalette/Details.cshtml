@@ -7,32 +7,48 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>DocumentMetadata</h4>
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.docID)
-        </dt>
-
-        
-
-        <dt>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.docName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.dateOfCreation)
-        </dt>
-
-        
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.versions)
-        </dt>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.iCareWorker.profession)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModificationHistory.description)
+        </th>
+        <th></th>
+    </tr>
 
-
-    </dl>
-</div>
-
-<p>
-    <!-- @Html.ActionLink("Edit", "Edit", new { id = Model.docID }) -->
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.docName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateOfCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.versions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.iCareWorker.profession)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationHistory.description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.docID })
+            </td>
+        </tr>
+    }
+</table>

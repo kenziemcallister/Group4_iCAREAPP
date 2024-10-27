@@ -21,15 +21,14 @@
             </div>
         }
 
-        <p class="lead">Welcome to the iCARE healthcare system!</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p> 
     </section>
 
     <div class="row">
         <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
+            <h2 id="gettingStartedTitle">Welcome to the iCARE healthcare system!</h2>
             <p>
-                This is a healthcare system used by doctors nurses, and admins. 
+                This is a healthcare system used by doctors nurses, and admins.
                 The goal of the system is to allow workers to see their active patients and patient data.
                 This is a system created by Group4.
             </p>
@@ -38,4 +37,5 @@
     </div>
 
     <button type="button" onclick="location.href='@Url.Action("Index", "DisplayMyBoard")'">Board!</button>
+    <button type="button" onclick="location.href='@Url.Action("Index", "DisplayPalette")'">Palette</button>
 </main>

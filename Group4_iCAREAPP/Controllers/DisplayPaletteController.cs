@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Group4_iCAREAPP.Models;
+//using Microsoft.AspNet.Identity;
+
 
 namespace Group4_iCAREAPP.Controllers
 {
@@ -53,6 +55,9 @@ namespace Group4_iCAREAPP.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Automatically set userID to the doc:
+                //documentMetadata.userID = User.Identity.GetUserId();
+
                 db.DocumentMetadata.Add(documentMetadata);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -17,16 +17,27 @@ namespace Group4_iCAREAPP.Controllers
         // GET: DisplayMyBoard
         public ActionResult Index()
         {
+            //ViewBag.UserName = User.Identity.Name;
             var patientRecord = db.PatientRecord.Include(p => p.DocumentMetadata).Include(p => p.GeoCodes).Include(p => p.iCareWorker).Include(p => p.ModificationHistory);
             var userId = User.Identity.Name; // Replace this with the correct way to get the user ID
 
             // Pass the user ID to the view for the message to be displayed at the top of the index of displayMyBoard
             ViewBag.UserId = userId;
 
-            //need to get the patients related to the userId here
+            //need to get the patients related to the userId here:
+            // Query TreatmentRecord to find patients assigned to the logged-in iCareWorker
+            var assignedPatients = db.TreatmentRecord
+                .Where(tr => tr.treatedBy == userId)
+                .Select(tr => tr.PatientRecord) // Assuming `TreatmentRecord` has a navigation property to `PatientRecord`
+                .Include(pr => pr.DocumentMetadata)
+                .Include(pr => pr.GeoCodes)
+                .Include(pr => pr.iCareWorker)
+                .Include(pr => pr.ModificationHistory)
+                .ToList();
 
+            return View(assignedPatients);
 
-            return View(patientRecord.ToList());
+            //return View(patientRecord.ToList());
         }
 
         // GET: DisplayMyBoard/Details/5

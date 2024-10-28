@@ -26,16 +26,19 @@ namespace Group4_iCAREAPP.Controllers
         // GET: DisplayPalette/Details/5
         public ActionResult Details(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DocumentMetadata documentMetadata = db.DocumentMetadata.Find(id);
-            if (documentMetadata == null)
-            {
-                return HttpNotFound();
-            }
-            return View(documentMetadata);
+            /*if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             DocumentMetadata documentMetadata = db.DocumentMetadata.Find(id);
+             if (documentMetadata == null)
+             {
+                 return HttpNotFound();
+             }
+             return View(documentMetadata); */
+
+            var documentMetadata = db.DocumentMetadata.Include(d => d.iCareWorker).Include(d => d.ModificationHistory);
+            return View(documentMetadata.ToList());
         }
 
         // GET: DisplayPalette/Create

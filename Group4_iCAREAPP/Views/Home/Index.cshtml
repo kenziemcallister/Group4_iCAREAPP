@@ -16,12 +16,12 @@
 
         @if (TempData["LogoutMessage"] != null)
         {
-            <div class= "alert alert-success">
+            <div class="alert alert-success">
                 @TempData["LogoutMessage"]
             </div>
         }
 
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p> 
+        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
     </section>
 
     <div class="row">
@@ -38,5 +38,6 @@
 
     <button type="button" onclick="location.href='@Url.Action("Index", "ManageAccounts")'">Manage Accounts for Admin</button>
     <button type="button" onclick="location.href='@Url.Action("Index", "DisplayPalette")'">Palette</button>
+    <button type="button" onclick="location.href='@Url.Action("Index", "ImportImage")'">Import Image</button>
 
 </main>

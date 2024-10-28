@@ -19,9 +19,29 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ImportImage
         public ActionResult Index()
         {
-            var documentMetadata = db.DocumentMetadata.Include(d => d.iCareWorker).Include(d => d.ModificationHistory);
-            return View(documentMetadata.ToList());
+            var documentMetadata = db.DocumentMetadata
+                .Include(d => d.iCareWorker)
+                .Include(d => d.ModificationHistory)
+                .ToList();
+
+            // Map file paths for each document
+            foreach (var doc in documentMetadata)
+            {
+                string filePath = Path.Combine(Server.MapPath("~/UploadedImages"), doc.docName);
+                if (System.IO.File.Exists(filePath))
+                {
+                    // Set a property in your model or view model to store the URL for display
+                    doc.FileUrl = Url.Content("~/UploadedImages/" + doc.docName);
+                }
+                else
+                {
+                    doc.FileUrl = null; // Handle case where file is missing
+                }
+            }
+
+            return View(documentMetadata);
         }
+
 
         // GET: ImportImage/Details/5
         public ActionResult Details(string id)
@@ -63,7 +83,10 @@ namespace Group4_iCAREAPP.Controllers
             if (file != null && file.ContentLength > 0 && ModelState.IsValid)
             {
                 // Save the file to a directory
-                string filePath = Path.Combine(Server.MapPath("~/UploadedImages"), Path.GetFileName(file.FileName));
+
+                string folderPath = Server.MapPath("~/Content/UploadedImages");
+                Directory.CreateDirectory(folderPath); // Creates the folder if it doesn’t exist
+                string filePath = Path.Combine(folderPath, file.FileName);
                 file.SaveAs(filePath);
 
                 // Set Document Metadata properties

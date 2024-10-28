@@ -4,54 +4,57 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Document List with Previews</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.docName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.dateOfCreation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.versions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.iCareWorker.profession)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModificationHistory.description)
-        </th>
+        <th>Preview</th>
+        <th>@Html.DisplayNameFor(model => model.docName)</th>
+        <th>@Html.DisplayNameFor(model => model.dateOfCreation)</th>
+        <th>@Html.DisplayNameFor(model => model.versions)</th>
+        <th>@Html.DisplayNameFor(model => model.iCareWorker.profession)</th>
+        <th>@Html.DisplayNameFor(model => model.ModificationHistory.description)</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.docName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dateOfCreation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.versions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.iCareWorker.profession)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModificationHistory.description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.docID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.docID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.docID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @* Check if the file is an image *@
+                @{
+                    var isImage = item.docName.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                   item.docName.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                   item.docName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                   item.docName.EndsWith(".gif", StringComparison.OrdinalIgnoreCase);
+                }
 
+                @if (isImage && !string.IsNullOrEmpty(item.FileUrl))
+                {
+                    <img src="@item.FileUrl" alt="Document Image" style="width: 100px; height: auto;" />
+                }
+                else
+                {
+                    <span>No Preview Available</span>
+                    @* Optionally add an icon for non-image files *@
+                    <i class="fas fa-file"></i> <!-- Requires Font Awesome for file icon -->
+                }
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.docName)</td>
+            <td>@Html.DisplayFor(modelItem => item.dateOfCreation)</td>
+            <td>@Html.DisplayFor(modelItem => item.versions)</td>
+            <td>@Html.DisplayFor(modelItem => item.iCareWorker.profession)</td>
+            <td>@Html.DisplayFor(modelItem => item.ModificationHistory.description)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.docID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.docID })
+            </td>
+        </tr>
+    }
 </table>
+

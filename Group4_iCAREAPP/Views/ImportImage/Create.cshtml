@@ -10,94 +10,91 @@
 {
     @Html.AntiForgeryToken()
 
+    <div class="form-horizontal">
+        <h4>Upload Document</h4>
+        <div class="form-group">
+            <label class="control-label col-md-2">Select File</label>
+            <div class="col-md-10">
+                <input type="file" name="file" required />
+            </div>
+        </div>
+
+        <h4>Document Metadata</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.docID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.docID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.docID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.userID, "User ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("userID", (SelectList)ViewBag.userID, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.userID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.docName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.docName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.docName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dateOfCreation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dateOfCreation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dateOfCreation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.versions, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.versions, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.versions, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <h4>Modification History</h4>
+        <hr />
+
+        <div class="form-group">
+            @Html.Label("Modification History ID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("modificationHistory.ID", Model.docID, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessage("modificationHistory.ID", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Date of Modification", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="date" name="modificationHistory.dateOfModification" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Description", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="modificationHistory.description" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 }
-
-<div class="form-horizontal">
-    <h4>Upload Document</h4>
-    <div class="form-group">
-        <label class="control-label col-md-2">Select File</label>
-        <div class="col-md-10">
-            <input type="file" name="file" required />
-        </div>
-    </div>
-
-    <h4>Document Metadata</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.docID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.docID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.docID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.userID, "User ID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("userID", (SelectList)ViewBag.userID, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.userID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.docName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.docName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.docName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.dateOfCreation, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.dateOfCreation, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.dateOfCreation, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.versions, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="date" name="versions" class="form-control" required />
-            @Html.ValidationMessageFor(model => model.versions, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <h4>Modification History</h4>
-    <hr />
-
-    <div class="form-group">
-        @Html.Label("Modification History ID", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBox("modificationHistoryID", Model.docID, new { @class = "form-control", @readonly = "readonly" })
-            @Html.ValidationMessage("modificationHistoryID", "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.Label("Date of Modification", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="date" name="ModificationHistory.dateOfModification" class="form-control" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.Label("Description", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="text" name="ModificationHistory.description" class="form-control" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
-
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -106,4 +103,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
 

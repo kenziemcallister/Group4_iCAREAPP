@@ -39,7 +39,7 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ManageAccounts/Create
         public ActionResult Create()
         {
-            ViewBag.ID = new SelectList(db.iCareUser, "ID", "name");
+            ViewBag.ID = new SelectList(db.iCareUser, "ID", "ID");
             return View();
         }
 

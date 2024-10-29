@@ -62,7 +62,7 @@ namespace Group4_iCAREAPP.Controllers
         public ActionResult Create()
         {
             // Generate a unique 10-character ID
-            string docID = Guid.NewGuid().ToString("N").Substring(0, 10);
+            string docID = Guid.NewGuid().ToString("N").Substring(0, 5);
 
             // Initialize DocumentMetadata with pre-set docID
             var documentMetadata = new DocumentMetadata
@@ -90,7 +90,7 @@ namespace Group4_iCAREAPP.Controllers
                 file.SaveAs(filePath);
 
                 // Set Document Metadata properties
-                documentMetadata.docID = Guid.NewGuid().ToString().Substring(0, 10); // Ensure it is 10 characters
+                documentMetadata.docID = Guid.NewGuid().ToString().Substring(0, 5); // Ensure it is 5 characters
                 documentMetadata.docName = Path.GetFileName(file.FileName);
                 documentMetadata.dateOfCreation = DateTime.Now;
 

@@ -70,16 +70,28 @@ namespace Group4_iCAREAPP.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PatientRecord.Add(patientRecord);
+                // Create a new TreatmentRecord
+                TreatmentRecord treatmentRecord = new TreatmentRecord
+                {
+                    patientsList = patientRecord.ID, // Link to the selected patient
+                    treatedBy = User.Identity.Name // Link to the selected worker
+                };
+
+                // Add the TreatmentRecord to the database
+                db.TreatmentRecord.Add(treatmentRecord); // Make sure you have a DbSet<TreatmentRecord> in your DbContext
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-                ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
-                ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-                ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID", patientRecord.treatedBy);
-                ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
-                return View(patientRecord);
+            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
+            ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
+            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID", patientRecord.treatedBy);
+            ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
+
+            ViewBag.PatientList = new SelectList(db.PatientRecord, "ID", "ID", patientRecord.ID); // Adjust the properties as needed
+            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
+            return View(patientRecord);
         }
 
         // GET: AssignPatient/Edit/5

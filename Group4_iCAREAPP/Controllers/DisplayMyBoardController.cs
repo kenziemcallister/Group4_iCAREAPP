@@ -24,6 +24,13 @@ namespace Group4_iCAREAPP.Controllers
             // Pass the user ID to the view for the message to be displayed at the top of the index of displayMyBoard
             ViewBag.UserId = userId;
 
+            // Fetch the user to get the first name
+            var user = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            if (user != null)
+            {
+                Session["FirstName"] = user.name; // Assuming 'name' is the first name of the user
+            }
+
             //need to get the patients related to the userId here:
             // Query TreatmentRecord to find patients assigned to the logged-in iCareWorker
             var assignedPatients = db.TreatmentRecord

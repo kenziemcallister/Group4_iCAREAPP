@@ -1,0 +1,103 @@
+﻿@model Group4_iCAREAPP.Models.PatientRecord
+
+@{
+    ViewBag.Title = "Assign";
+}
+
+<h2>Assign Patient</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>PatientRecord</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Patient ID*
+            </label>
+            <div class="col-md-10">
+                @Html.DropDownList("ID", ViewBag.PatientList as SelectList, "Select Patient ID", new { @class = "form-control", id = "patientDropdown" })
+                @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="patientName" class="control-label col-md-2">Patient Name</label>
+            <div class="col-md-10">
+                <input type="text" id="patientName" class="form-control" disabled />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-20">
+                Treated By*
+            </label>
+            <div class="col-md-10">
+                @Html.DropDownList("treatedBy", ViewBag.treatedBy as SelectList, "Select Worker ID", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.treatedBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <!--
+        <div class="form-group">
+            @Html.LabelFor(model => model.docID, "docID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("docID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.docID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.modifierID, "modifierID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("modifierID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.modifierID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        -->
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#patientDropdown').change(function () {
+            var selectedPatientID = $(this).val(); // Get the selected ID
+            if (selectedPatientID) {
+                // AJAX call to get the patient name based on selected ID
+                $.ajax({
+                    url: '@Url.Action("GetPatientName", "AssignPatient")', // Update this URL to match your controller action
+                    type: 'GET',
+                    data: { id: selectedPatientID },
+                    success: function (data) {
+                        $('#patientName').val(data.name); // Set the name in the input field
+                    },
+                    error: function () {
+                        $('#patientName').val(''); // Clear if there's an error
+                    }
+                });
+            } else {
+                $('#patientName').val(''); // Clear if no ID is selected
+            }
+        });
+    });
+</script>

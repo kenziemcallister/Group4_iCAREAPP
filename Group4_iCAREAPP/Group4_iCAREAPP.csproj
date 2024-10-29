@@ -279,7 +279,7 @@
     <Content Include="Views\iCAREBoard\Details.cshtml" />
     <Content Include="Views\iCAREBoard\Edit.cshtml" />
     <Content Include="Views\iCAREBoard\Index.cshtml" />
-    <Content Include="Views\AssignPatient\Create.cshtml" />
+    <Content Include="Views\AssignPatient\Assign.cshtml" />
     <Content Include="Views\AssignPatient\Delete.cshtml" />
     <Content Include="Views\AssignPatient\Details.cshtml" />
     <Content Include="Views\AssignPatient\Edit.cshtml" />

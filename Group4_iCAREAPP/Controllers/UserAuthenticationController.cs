@@ -156,12 +156,18 @@ namespace Group4_iCAREAPP.Controllers
 
                 if (isAuthenticated)
                 {
+                    // Retrieve the user's first name
+                    var user = db.iCareUser.SingleOrDefault(u => u.ID == model.ID);
+                    if (user != null)
+                    {
+                        // Store first name in session
+                        Session["FirstName"] = user.name;
 
-                    TempData["LoginMessage"] = $"Login successful. Welcome to iCARE, {model.ID}!"; //success message to display on the home page. see home page index html file for other part
+                        TempData["LoginMessage"] = $"Login successful. Welcome to iCARE, {Session["FirstName"]}!"; //success message to display on the home page. see home page index html file for other part
 
-                    FormsAuthentication.SetAuthCookie(model.ID, false);
-                    return RedirectToAction("Index", "Home"); //if yes, redirect back to home
-
+                        FormsAuthentication.SetAuthCookie(model.ID, false);
+                        return RedirectToAction("Index", "Home"); //if yes, redirect back to home
+                    }
                 }
                 else
                 {

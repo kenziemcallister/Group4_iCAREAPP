@@ -18,3 +18,24 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Apply hover effect to all buttons, input buttons, and links styled as buttons */
+button,
+.btn,
+input[type="button"],
+input[type="submit"],
+a.button,
+a.btn {
+transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+button:hover,
+.btn:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+a.button:hover,
+a.btn:hover {
+    background-color: pink; /* Change to pink on hover */
+    color: white; /* Optional for better contrast */
+}
+

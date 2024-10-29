@@ -41,7 +41,7 @@ namespace Group4_iCAREAPP.Controllers
         {
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID");
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession");
+            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID");
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
             return View();
         }
@@ -60,11 +60,11 @@ namespace Group4_iCAREAPP.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
-            ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
-            ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
-            return View(patientRecord);
+                ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
+                ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
+                ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID", patientRecord.treatedBy);
+                ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
+                return View(patientRecord);
         }
 
         // GET: AssignPatient/Edit/5

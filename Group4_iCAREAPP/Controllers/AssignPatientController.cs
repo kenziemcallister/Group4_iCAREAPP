@@ -14,6 +14,17 @@ namespace Group4_iCAREAPP.Controllers
     {
         private Group4_iCAREDBEntities db = new Group4_iCAREDBEntities();
 
+        // GET: AssignPatient/GetPatientName
+        public JsonResult GetPatientName(string id)
+        {
+            var patient = db.PatientRecord.Find(id);
+            if (patient != null)
+            {
+                return Json(new { name = patient.name }, JsonRequestBehavior.AllowGet); // Return patient's name
+            }
+            return Json(new { name = string.Empty }, JsonRequestBehavior.AllowGet); // Return empty if not found
+        }
+
         // GET: AssignPatient
         public ActionResult Index()
         {
@@ -36,22 +47,26 @@ namespace Group4_iCAREAPP.Controllers
             return View(patientRecord);
         }
 
-        // GET: AssignPatient/Create
-        public ActionResult Create()
+        // GET: AssignPatient/Assign
+        public ActionResult Assign()
         {
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID");
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
             ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID");
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
+
+            ViewBag.PatientList = new SelectList(db.PatientRecord, "ID", "ID");
+            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID");
+
             return View();
         }
 
-        // POST: AssignPatient/Create
+        // POST: AssignPatient/Assign
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,treatedBy,docID,modifierID")] PatientRecord patientRecord)
+        public ActionResult Assign([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,treatedBy,docID,modifierID")] PatientRecord patientRecord)
         {
             if (ModelState.IsValid)
             {

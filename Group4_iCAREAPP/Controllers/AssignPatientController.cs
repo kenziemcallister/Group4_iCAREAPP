@@ -55,6 +55,7 @@ namespace Group4_iCAREAPP.Controllers
             {
                 db.TreatmentRecord.Add(treatmentRecord);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

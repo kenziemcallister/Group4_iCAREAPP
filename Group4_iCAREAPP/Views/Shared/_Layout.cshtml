@@ -6,58 +6,39 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" /> <!--This is the line you put at the head of every page to reference site.css-->
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("iCARE", "Index", "Home", null, new { @class = "navbar-brand" })
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
 
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (ViewBag.CurrentUser != null && ViewBag.CurrentUser.ID == "admin")
+                        {
+                            <li>@Html.ActionLink("Manage Accounts", "Index", "ManageAccounts", null, new { @class = "nav-link" })</li>
+                        }
+                        else if (ViewBag.CurrentWorker != null &&
+                                 (ViewBag.CurrentWorker.userPermission == "01" || ViewBag.CurrentWorker.userPermission == "02"))
+                        {
+                            <li>@Html.ActionLink("My Board", "Index", "DisplayMyBoard", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Palette", "Index", "DisplayPalette", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Create Patients", "Index", "ManagePatient", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Assign Patients", "Index", "AssignPatient", new { area = "" }, new { @class = "nav-link" })</li>
+                        }
 
-        @if (User.Identity.IsAuthenticated)
-        {
-
-            <div class="container">
-                @Html.ActionLink("iCARE", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("MyBoard", "Index", "DisplayMyBoard", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Palette", "Index", "DisplayPalette", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "UserAuthentication", new { area = "" }, new { @class = "nav-link" })</li>
-                    </ul>
-                </div>
+                        <li>@Html.ActionLink("Logout", "Logout", "UserAuthentication", null, new { @class = "nav-link" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("User Login", "Login", "UserAuthentication", null, new { @class = "nav-link" })</li>
+                    }
+                </ul>
             </div>
-
-
-        }
-
-        else
-        {
-
-            <div class="container">
-                @Html.ActionLink("iCARE", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("User Login", "Login", "UserAuthentication", new { area = "" }, new { @class = "nav-link" })</li>
-                    </ul>
-                </div>
-            </div>
-
-
-        }
-
-
-
-
-
+        </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
@@ -72,3 +53,5 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+

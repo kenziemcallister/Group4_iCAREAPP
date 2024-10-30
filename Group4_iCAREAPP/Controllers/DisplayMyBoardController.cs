@@ -17,11 +17,10 @@ namespace Group4_iCAREAPP.Controllers
         // GET: DisplayMyBoard
         public ActionResult Index()
         {
-            //ViewBag.UserName = User.Identity.Name;
-            var patientRecord = db.PatientRecord.Include(p => p.DocumentMetadata).Include(p => p.GeoCodes).Include(p => p.iCareWorker).Include(p => p.ModificationHistory);
-            var userId = User.Identity.Name; // Replace this with the correct way to get the user ID
+            // Get the user ID from the logged-in user's identity
+            var userId = User.Identity.Name; // Ensure this matches how the ID is stored in your User model
 
-            // Pass the user ID to the view for the message to be displayed at the top of the index of displayMyBoard
+            // Pass the user ID to the view for the message to be displayed at the top of the index of DisplayMyBoard
             ViewBag.UserId = userId;
 
             // Fetch the user to get the first name
@@ -31,21 +30,18 @@ namespace Group4_iCAREAPP.Controllers
                 Session["FirstName"] = user.name; // Assuming 'name' is the first name of the user
             }
 
-            //need to get the patients related to the userId here:
             // Query TreatmentRecord to find patients assigned to the logged-in iCareWorker
             var assignedPatients = db.TreatmentRecord
-                .Where(tr => tr.treatedBy == userId)
-                .Select(tr => tr.PatientRecord) // Assuming `TreatmentRecord` has a navigation property to `PatientRecord`
-                .Include(pr => pr.DocumentMetadata)
-                .Include(pr => pr.GeoCodes)
-                .Include(pr => pr.iCareWorker)
-                .Include(pr => pr.ModificationHistory)
+                .Where(tr => tr.workerID == userId) // Update this line if your foreign key is named differently
+                .Select(tr => tr.PatientRecord) // Assuming TreatmentRecord has a navigation property to PatientRecord
+                .Include(pr => pr.DocumentMetadata) // Ensure this navigation property exists
+                .Include(pr => pr.GeoCodes) // Ensure this navigation property exists
+                .Include(pr => pr.ModificationHistory) // Ensure this navigation property exists
                 .ToList();
 
             return View(assignedPatients);
-
-            //return View(patientRecord.ToList());
         }
+
 
         // GET: DisplayMyBoard/Details/5
         public ActionResult Details(string id)
@@ -88,7 +84,6 @@ namespace Group4_iCAREAPP.Controllers
 
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);
         }
@@ -107,7 +102,6 @@ namespace Group4_iCAREAPP.Controllers
             }
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);
         }
@@ -127,7 +121,6 @@ namespace Group4_iCAREAPP.Controllers
             }
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);
         }

@@ -18,7 +18,6 @@ namespace Group4_iCAREAPP.Models
         public iCareWorker()
         {
             this.DocumentMetadata = new HashSet<DocumentMetadata>();
-            this.PatientRecord = new HashSet<PatientRecord>();
             this.TreatmentRecord = new HashSet<TreatmentRecord>();
         }
     
@@ -31,8 +30,6 @@ namespace Group4_iCAREAPP.Models
         public virtual ICollection<DocumentMetadata> DocumentMetadata { get; set; }
         public virtual iCareAdmin iCareAdmin { get; set; }
         public virtual UserRole UserRole { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PatientRecord> PatientRecord { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TreatmentRecord> TreatmentRecord { get; set; }
     }

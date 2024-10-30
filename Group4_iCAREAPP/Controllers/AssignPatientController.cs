@@ -14,22 +14,11 @@ namespace Group4_iCAREAPP.Controllers
     {
         private Group4_iCAREDBEntities db = new Group4_iCAREDBEntities();
 
-        // GET: AssignPatient/GetPatientName
-        public JsonResult GetPatientName(string id)
-        {
-            var patient = db.PatientRecord.Find(id);
-            if (patient != null)
-            {
-                return Json(new { name = patient.name }, JsonRequestBehavior.AllowGet); // Return patient's name
-            }
-            return Json(new { name = string.Empty }, JsonRequestBehavior.AllowGet); // Return empty if not found
-        }
-
         // GET: AssignPatient
         public ActionResult Index()
         {
-            var patientRecord = db.PatientRecord.Include(p => p.DocumentMetadata).Include(p => p.GeoCodes).Include(p => p.iCareWorker).Include(p => p.ModificationHistory);
-            return View(patientRecord.ToList());
+            var treatmentRecord = db.TreatmentRecord.Include(t => t.iCareWorker).Include(t => t.PatientRecord);
+            return View(treatmentRecord.ToList());
         }
 
         // GET: AssignPatient/Details/5
@@ -39,47 +28,39 @@ namespace Group4_iCAREAPP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PatientRecord patientRecord = db.PatientRecord.Find(id);
-            if (patientRecord == null)
+            TreatmentRecord treatmentRecord = db.TreatmentRecord.Find(id);
+            if (treatmentRecord == null)
             {
                 return HttpNotFound();
             }
-            return View(patientRecord);
+            return View(treatmentRecord);
         }
 
-        // GET: AssignPatient/Assign
-        public ActionResult Assign()
+        // GET: AssignPatient/Create
+        public ActionResult Create()
         {
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID");
-            ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID");
-            ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
-
-            ViewBag.PatientList = new SelectList(db.PatientRecord, "ID", "ID");
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID");
-
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession");
+            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name");
             return View();
         }
 
-        // POST: AssignPatient/Assign
+        // POST: AssignPatient/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Assign([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,treatedBy,docID,modifierID")] PatientRecord patientRecord)
+        public ActionResult Create([Bind(Include = "treatmentID,description,treatmentDate,patientID,workerID")] TreatmentRecord treatmentRecord)
         {
             if (ModelState.IsValid)
             {
-                db.PatientRecord.Add(patientRecord);
+                db.TreatmentRecord.Add(treatmentRecord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-                ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
-                ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-                ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "ID", patientRecord.treatedBy);
-                ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
-                return View(patientRecord);
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession", treatmentRecord.workerID);
+            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
+            return View(treatmentRecord);
         }
 
         // GET: AssignPatient/Edit/5
@@ -89,16 +70,14 @@ namespace Group4_iCAREAPP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PatientRecord patientRecord = db.PatientRecord.Find(id);
-            if (patientRecord == null)
+            TreatmentRecord treatmentRecord = db.TreatmentRecord.Find(id);
+            if (treatmentRecord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
-            ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
-            ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
-            return View(patientRecord);
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession", treatmentRecord.workerID);
+            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
+            return View(treatmentRecord);
         }
 
         // POST: AssignPatient/Edit/5
@@ -106,19 +85,17 @@ namespace Group4_iCAREAPP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,treatedBy,docID,modifierID")] PatientRecord patientRecord)
+        public ActionResult Edit([Bind(Include = "treatmentID,description,treatmentDate,patientID,workerID")] TreatmentRecord treatmentRecord)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(patientRecord).State = EntityState.Modified;
+                db.Entry(treatmentRecord).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
-            ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
-            ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
-            return View(patientRecord);
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession", treatmentRecord.workerID);
+            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
+            return View(treatmentRecord);
         }
 
         // GET: AssignPatient/Delete/5
@@ -128,12 +105,12 @@ namespace Group4_iCAREAPP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PatientRecord patientRecord = db.PatientRecord.Find(id);
-            if (patientRecord == null)
+            TreatmentRecord treatmentRecord = db.TreatmentRecord.Find(id);
+            if (treatmentRecord == null)
             {
                 return HttpNotFound();
             }
-            return View(patientRecord);
+            return View(treatmentRecord);
         }
 
         // POST: AssignPatient/Delete/5
@@ -141,8 +118,8 @@ namespace Group4_iCAREAPP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            PatientRecord patientRecord = db.PatientRecord.Find(id);
-            db.PatientRecord.Remove(patientRecord);
+            TreatmentRecord treatmentRecord = db.TreatmentRecord.Find(id);
+            db.TreatmentRecord.Remove(treatmentRecord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

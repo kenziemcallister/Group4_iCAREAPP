@@ -33,9 +33,9 @@ namespace Group4_iCAREAPP.Models
         public virtual DbSet<iCareUser> iCareUser { get; set; }
         public virtual DbSet<iCareWorker> iCareWorker { get; set; }
         public virtual DbSet<ModificationHistory> ModificationHistory { get; set; }
-        public virtual DbSet<PatientRecord> PatientRecord { get; set; }
-        public virtual DbSet<TreatmentRecord> TreatmentRecord { get; set; }
         public virtual DbSet<UserPassword> UserPassword { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<PatientRecord> PatientRecord { get; set; }
+        public virtual DbSet<TreatmentRecord> TreatmentRecord { get; set; }
     }
 }

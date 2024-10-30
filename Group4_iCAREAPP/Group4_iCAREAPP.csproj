@@ -279,11 +279,6 @@
     <Content Include="Views\iCAREBoard\Details.cshtml" />
     <Content Include="Views\iCAREBoard\Edit.cshtml" />
     <Content Include="Views\iCAREBoard\Index.cshtml" />
-    <Content Include="Views\AssignPatient\Assign.cshtml" />
-    <Content Include="Views\AssignPatient\Delete.cshtml" />
-    <Content Include="Views\AssignPatient\Details.cshtml" />
-    <Content Include="Views\AssignPatient\Edit.cshtml" />
-    <Content Include="Views\AssignPatient\Index.cshtml" />
     <Content Include="Views\DisplayPalette\Create.cshtml" />
     <Content Include="Views\DisplayPalette\Delete.cshtml" />
     <Content Include="Views\DisplayPalette\Details.cshtml" />
@@ -315,6 +310,11 @@
     <Content Include="Views\ManageWorker\Details.cshtml" />
     <Content Include="Views\ManageWorker\Edit.cshtml" />
     <Content Include="Views\ManageWorker\Index.cshtml" />
+    <Content Include="Views\AssignPatient\Create.cshtml" />
+    <Content Include="Views\AssignPatient\Delete.cshtml" />
+    <Content Include="Views\AssignPatient\Details.cshtml" />
+    <Content Include="Views\AssignPatient\Edit.cshtml" />
+    <Content Include="Views\AssignPatient\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

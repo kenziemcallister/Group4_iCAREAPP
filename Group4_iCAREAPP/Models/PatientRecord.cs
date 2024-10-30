@@ -30,13 +30,11 @@ namespace Group4_iCAREAPP.Models
         public string bedID { get; set; }
         public string treatmentArea { get; set; }
         public string geographicalUnit { get; set; }
-        public string treatedBy { get; set; }
         public string docID { get; set; }
         public string modifierID { get; set; }
     
         public virtual DocumentMetadata DocumentMetadata { get; set; }
         public virtual GeoCodes GeoCodes { get; set; }
-        public virtual iCareWorker iCareWorker { get; set; }
         public virtual ModificationHistory ModificationHistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TreatmentRecord> TreatmentRecord { get; set; }

@@ -17,7 +17,7 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ManagePatient
         public ActionResult Index()
         {
-            var patientRecord = db.PatientRecord.Include(p => p.DocumentMetadata).Include(p => p.GeoCodes).Include(p => p.iCareWorker).Include(p => p.ModificationHistory);
+            var patientRecord = db.PatientRecord.Include(p => p.DocumentMetadata).Include(p => p.GeoCodes).Include(p => p.ModificationHistory);
             return View(patientRecord.ToList());
         }
 
@@ -41,7 +41,6 @@ namespace Group4_iCAREAPP.Controllers
         {
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID");
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession");
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
             return View();
         }
@@ -62,7 +61,6 @@ namespace Group4_iCAREAPP.Controllers
 
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);
         }
@@ -81,7 +79,6 @@ namespace Group4_iCAREAPP.Controllers
             }
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);
         }
@@ -101,7 +98,6 @@ namespace Group4_iCAREAPP.Controllers
             }
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.treatedBy = new SelectList(db.iCareWorker, "ID", "profession", patientRecord.treatedBy);
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);
         }

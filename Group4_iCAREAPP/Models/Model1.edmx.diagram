@@ -13,23 +13,22 @@
         <EntityTypeShape EntityType="Group4_iCAREDBModel.iCareUser" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="Group4_iCAREDBModel.iCareWorker" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Group4_iCAREDBModel.ModificationHistory" Width="1.5" PointX="9.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Group4_iCAREDBModel.PatientRecord" Width="1.5" PointX="12" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Group4_iCAREDBModel.TreatmentRecord" Width="1.5" PointX="14.25" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Group4_iCAREDBModel.UserPassword" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Group4_iCAREDBModel.UserRole" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__DocumentM__userI__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__Modification__ID__5535A963" ManuallyRouted="false" />
-        <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__docID__59FA5E80" ManuallyRouted="false" />
-        <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__geogr__5812160E" ManuallyRouted="false" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__iCareAdmin__ID__4AB81AF0" ManuallyRouted="false" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__iCareWork__creat__4E88ABD4" ManuallyRouted="false" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__UserPassword__ID__412EB0B6" ManuallyRouted="false" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__iCareWork__userP__4F7CD00D" ManuallyRouted="false" />
-        <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__treat__59063A47" ManuallyRouted="false" />
-        <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__treat__5DCAEF64" ManuallyRouted="false" />
-        <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__modif__5AEE82B9" ManuallyRouted="false" />
-        <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__patie__5EBF139D" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="Group4_iCAREDBModel.PatientRecord" Width="1.5" PointX="12" PointY="1.25" />
+        <EntityTypeShape EntityType="Group4_iCAREDBModel.TreatmentRecord" Width="1.5" PointX="14.25" PointY="2.25" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__docID__31B762FC" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__geogr__30C33EC3" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__worke__367C1819" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__modif__32AB8735" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__patie__3587F3E0" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

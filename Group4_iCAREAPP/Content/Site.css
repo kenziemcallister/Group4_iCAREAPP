@@ -26,8 +26,23 @@ input[type="button"],
 input[type="submit"],
 a.button,
 a.btn {
-transition: background-color 0.3s ease; /* Smooth transition effect */
+    font-size: 22px;
+    transition: background-color 0.3s ease;
 }
+
+
+button {
+    background-color: cornflowerblue;
+    color: floralwhite;
+    border: none;
+    padding: 15px 12px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s; /* Transition effect */
+}
+
 
 button:hover,
 .btn:hover,
@@ -38,4 +53,3 @@ a.btn:hover {
     background-color: pink; /* Change to pink on hover */
     color: white; /* Optional for better contrast */
 }
-

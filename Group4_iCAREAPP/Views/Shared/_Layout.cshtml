@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm" style="background-color: navy;">
         <div class="container">
-            @Html.ActionLink("iCARE", "Index", "Home", null, new { @class = "navbar-brand" })
+            @Html.ActionLink("iCARE", "Index", "Home", null, new { @class = "navbar-brand", style = "color:floralwhite;" })
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
 
@@ -19,23 +19,23 @@
                     {
                         if (ViewBag.CurrentUser != null && ViewBag.CurrentUser.ID == "admin")
                         {
-                            <li>@Html.ActionLink("Manage Accounts", "Index", "ManageAccounts", null, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Manage Accounts", "Index", "ManageAccounts", null, new { @class = "nav-link", style = "color:floralwhite;" })</li>
                         }
                         else if (ViewBag.CurrentWorker != null &&
                                  (ViewBag.CurrentWorker.userPermission == "01" || ViewBag.CurrentWorker.userPermission == "02"))
                         {
-                            <li>@Html.ActionLink("My Board", "Index", "DisplayMyBoard", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("Palette", "Index", "DisplayPalette", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("Create Patients", "Index", "ManagePatient", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("Assign Patients", "Index", "AssignPatient", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li>@Html.ActionLink("iCARE Board", "Index", "iCAREBoard", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("My Board", "Index", "DisplayMyBoard", new { area = "" }, new { @class = "nav-link", style = "color:floralwhite;" })</li>
+                            <li>@Html.ActionLink("Palette", "Index", "DisplayPalette", new { area = "" }, new { @class = "nav-link", style = "color:floralwhite;" })</li>
+                            <li>@Html.ActionLink("Create Patients", "Index", "ManagePatient", new { area = "" }, new { @class = "nav-link", style = "color:floralwhite;" })</li>
+                            <li>@Html.ActionLink("Assign Patients", "Index", "AssignPatient", new { area = "" }, new { @class = "nav-link", style = "color:floralwhite;" })</li>
+                            <li>@Html.ActionLink("iCARE Board", "Index", "iCAREBoard", new { area = "" }, new { @class = "nav-link", style = "color:floralwhite;" })</li>
                         }
 
-                        <li>@Html.ActionLink("Logout", "Logout", "UserAuthentication", null, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "UserAuthentication", null, new { @class = "nav-link", style = "color:floralwhite;" })</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Login", "Login", "UserAuthentication", null, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Login", "Login", "UserAuthentication", null, new { @class = "nav-link", style = "color:floralwhite;" })</li>
                     }
                 </ul>
             </div>

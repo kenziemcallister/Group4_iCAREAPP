@@ -25,8 +25,9 @@ namespace Group4_iCAREAPP.Models
         public string docName { get; set; }
         public Nullable<System.DateTime> dateOfCreation { get; set; }
         public string versions { get; set; }
-        public string FileUrl { get; set; }  // Ensure this property exists
 
+        public string FileUrl { get; set; }
+    
         public virtual iCareWorker iCareWorker { get; set; }
         public virtual ModificationHistory ModificationHistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

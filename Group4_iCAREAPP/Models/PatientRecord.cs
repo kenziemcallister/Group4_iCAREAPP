@@ -32,6 +32,8 @@ namespace Group4_iCAREAPP.Models
         public string geographicalUnit { get; set; }
         public string docID { get; set; }
         public string modifierID { get; set; }
+        public Nullable<int> doctorCount { get; set; }
+        public Nullable<int> nurseCount { get; set; }
     
         public virtual DocumentMetadata DocumentMetadata { get; set; }
         public virtual GeoCodes GeoCodes { get; set; }

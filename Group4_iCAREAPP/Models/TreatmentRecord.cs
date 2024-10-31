@@ -19,8 +19,10 @@ namespace Group4_iCAREAPP.Models
         public System.DateTime treatmentDate { get; set; }
         public string patientID { get; set; }
         public string workerID { get; set; }
+        public string drugID { get; set; }
     
         public virtual iCareWorker iCareWorker { get; set; }
         public virtual PatientRecord PatientRecord { get; set; }
+        public virtual DrugsManagementSystem DrugsManagementSystem { get; set; }
     }
 }

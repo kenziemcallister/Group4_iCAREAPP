@@ -28,6 +28,8 @@
         <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__worke__367C1819" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__PatientRe__modif__32AB8735" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__patie__3587F3E0" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__drugI__01D345B0" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__iCareWork__geogr__70A8B9AE" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -25,6 +25,7 @@ namespace Group4_iCAREAPP.Models
         public string profession { get; set; }
         public string creator { get; set; }
         public string userPermission { get; set; }
+        public string geographicalUnit { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocumentMetadata> DocumentMetadata { get; set; }
@@ -32,5 +33,6 @@ namespace Group4_iCAREAPP.Models
         public virtual UserRole UserRole { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TreatmentRecord> TreatmentRecord { get; set; }
+        public virtual GeoCodes GeoCodes { get; set; }
     }
 }

@@ -14,8 +14,17 @@ namespace Group4_iCAREAPP.Models
     
     public partial class DrugsManagementSystem
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DrugsManagementSystem()
+        {
+            this.TreatmentRecord = new HashSet<TreatmentRecord>();
+        }
+    
         public string drugID { get; set; }
         public string drugName { get; set; }
         public string description { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TreatmentRecord> TreatmentRecord { get; set; }
     }
 }

@@ -61,6 +61,7 @@
           <Property Name="profession" Type="varchar" MaxLength="20" />
           <Property Name="creator" Type="char" MaxLength="5" />
           <Property Name="userPermission" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="geographicalUnit" Type="char" MaxLength="2" />
         </EntityType>
         <EntityType Name="ModificationHistory">
           <Key>
@@ -85,6 +86,8 @@
           <Property Name="treatmentArea" Type="varchar" MaxLength="20" />
           <Property Name="geographicalUnit" Type="char" MaxLength="2" />
           <Property Name="docID" Type="char" MaxLength="5" />
+          <Property Name="doctorCount" Type="int" />
+          <Property Name="nurseCount" Type="int" />
           <Property Name="modifierID" Type="char" MaxLength="5" />
         </EntityType>
         <EntityType Name="TreatmentRecord">
@@ -96,6 +99,7 @@
           <Property Name="treatmentDate" Type="date" Nullable="false" />
           <Property Name="patientID" Type="char" MaxLength="5" Nullable="false" />
           <Property Name="workerID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="drugID" Type="char" MaxLength="3" />
         </EntityType>
         <EntityType Name="UserPassword">
           <Key>
@@ -114,7 +118,7 @@
           <Property Name="roleID" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="roleName" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <Association Name="FK__DocumentM__userI__2B0A656D">
+        <Association Name="FK__DocumentM__userI__756D6ECB">
           <End Role="iCareWorker" Type="Self.iCareWorker" Multiplicity="1" />
           <End Role="DocumentMetadata" Type="Self.DocumentMetadata" Multiplicity="*" />
           <ReferentialConstraint>
@@ -126,7 +130,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__iCareAdmin__ID__236943A5">
+        <Association Name="FK__iCareAdmin__ID__6CD828CA">
           <End Role="iCareUser" Type="Self.iCareUser" Multiplicity="1" />
           <End Role="iCareAdmin" Type="Self.iCareAdmin" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -138,7 +142,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__iCareWork__creat__2739D489">
+        <Association Name="FK__iCareWork__creat__719CDDE7">
           <End Role="iCareAdmin" Type="Self.iCareAdmin" Multiplicity="0..1" />
           <End Role="iCareWorker" Type="Self.iCareWorker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -150,7 +154,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__iCareWork__userP__282DF8C2">
+        <Association Name="FK__iCareWork__geogr__70A8B9AE">
+          <End Role="GeoCodes" Type="Self.GeoCodes" Multiplicity="0..1" />
+          <End Role="iCareWorker" Type="Self.iCareWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeoCodes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="iCareWorker">
+              <PropertyRef Name="geographicalUnit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__iCareWork__userP__72910220">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
           <End Role="iCareWorker" Type="Self.iCareWorker" Multiplicity="*" />
           <ReferentialConstraint>
@@ -162,7 +178,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Modification__ID__2DE6D218">
+        <Association Name="FK__Modification__ID__7849DB76">
           <End Role="DocumentMetadata" Type="Self.DocumentMetadata" Multiplicity="1" />
           <End Role="ModificationHistory" Type="Self.ModificationHistory" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -174,7 +190,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientRe__docID__31B762FC">
+        <Association Name="FK__PatientRe__docID__7C1A6C5A">
           <End Role="DocumentMetadata" Type="Self.DocumentMetadata" Multiplicity="0..1" />
           <End Role="PatientRecord" Type="Self.PatientRecord" Multiplicity="*" />
           <ReferentialConstraint>
@@ -186,7 +202,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientRe__geogr__30C33EC3">
+        <Association Name="FK__PatientRe__geogr__7B264821">
           <End Role="GeoCodes" Type="Self.GeoCodes" Multiplicity="0..1" />
           <End Role="PatientRecord" Type="Self.PatientRecord" Multiplicity="*" />
           <ReferentialConstraint>
@@ -198,7 +214,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientRe__modif__32AB8735">
+        <Association Name="FK__PatientRe__modif__7D0E9093">
           <End Role="ModificationHistory" Type="Self.ModificationHistory" Multiplicity="0..1" />
           <End Role="PatientRecord" Type="Self.PatientRecord" Multiplicity="*" />
           <ReferentialConstraint>
@@ -210,7 +226,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Treatment__patie__3587F3E0">
+        <Association Name="FK__Treatment__drugI__01D345B0">
+          <End Role="DrugsManagementSystem" Type="Self.DrugsManagementSystem" Multiplicity="0..1" />
+          <End Role="TreatmentRecord" Type="Self.TreatmentRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DrugsManagementSystem">
+              <PropertyRef Name="drugID" />
+            </Principal>
+            <Dependent Role="TreatmentRecord">
+              <PropertyRef Name="drugID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Treatment__patie__02C769E9">
           <End Role="PatientRecord" Type="Self.PatientRecord" Multiplicity="1" />
           <End Role="TreatmentRecord" Type="Self.TreatmentRecord" Multiplicity="*" />
           <ReferentialConstraint>
@@ -222,7 +250,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Treatment__worke__367C1819">
+        <Association Name="FK__Treatment__worke__03BB8E22">
           <End Role="iCareWorker" Type="Self.iCareWorker" Multiplicity="1" />
           <End Role="TreatmentRecord" Type="Self.TreatmentRecord" Multiplicity="*" />
           <ReferentialConstraint>
@@ -235,9 +263,9 @@
           </ReferentialConstraint>
         </Association>
         <!--Errors Found During Generation:
-warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK__UserPassw__encry__1AD3FDA4" />-->
-        <Association Name="FK__UserPassword__ID__19DFD96B">
+warning 6035: The relationship 'FK__UserPassw__encry__6442E2C9' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK__UserPassw__encry__6442E2C9" />-->
+        <Association Name="FK__UserPassword__ID__634EBE90">
           <End Role="iCareUser" Type="Self.iCareUser" Multiplicity="1" />
           <End Role="UserPassword" Type="Self.UserPassword" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -262,47 +290,55 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <EntitySet Name="TreatmentRecord" EntityType="Self.TreatmentRecord" Schema="Group4_iCAREDB" store:Type="Tables" />
           <EntitySet Name="UserPassword" EntityType="Self.UserPassword" Schema="Group4_iCAREDB" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="Group4_iCAREDB" store:Type="Tables" />
-          <AssociationSet Name="FK__DocumentM__userI__2B0A656D" Association="Self.FK__DocumentM__userI__2B0A656D">
+          <AssociationSet Name="FK__DocumentM__userI__756D6ECB" Association="Self.FK__DocumentM__userI__756D6ECB">
             <End Role="iCareWorker" EntitySet="iCareWorker" />
             <End Role="DocumentMetadata" EntitySet="DocumentMetadata" />
           </AssociationSet>
-          <AssociationSet Name="FK__iCareAdmin__ID__236943A5" Association="Self.FK__iCareAdmin__ID__236943A5">
+          <AssociationSet Name="FK__iCareAdmin__ID__6CD828CA" Association="Self.FK__iCareAdmin__ID__6CD828CA">
             <End Role="iCareUser" EntitySet="iCareUser" />
             <End Role="iCareAdmin" EntitySet="iCareAdmin" />
           </AssociationSet>
-          <AssociationSet Name="FK__iCareWork__creat__2739D489" Association="Self.FK__iCareWork__creat__2739D489">
+          <AssociationSet Name="FK__iCareWork__creat__719CDDE7" Association="Self.FK__iCareWork__creat__719CDDE7">
             <End Role="iCareAdmin" EntitySet="iCareAdmin" />
             <End Role="iCareWorker" EntitySet="iCareWorker" />
           </AssociationSet>
-          <AssociationSet Name="FK__iCareWork__userP__282DF8C2" Association="Self.FK__iCareWork__userP__282DF8C2">
+          <AssociationSet Name="FK__iCareWork__geogr__70A8B9AE" Association="Self.FK__iCareWork__geogr__70A8B9AE">
+            <End Role="GeoCodes" EntitySet="GeoCodes" />
+            <End Role="iCareWorker" EntitySet="iCareWorker" />
+          </AssociationSet>
+          <AssociationSet Name="FK__iCareWork__userP__72910220" Association="Self.FK__iCareWork__userP__72910220">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="iCareWorker" EntitySet="iCareWorker" />
           </AssociationSet>
-          <AssociationSet Name="FK__Modification__ID__2DE6D218" Association="Self.FK__Modification__ID__2DE6D218">
+          <AssociationSet Name="FK__Modification__ID__7849DB76" Association="Self.FK__Modification__ID__7849DB76">
             <End Role="DocumentMetadata" EntitySet="DocumentMetadata" />
             <End Role="ModificationHistory" EntitySet="ModificationHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientRe__docID__31B762FC" Association="Self.FK__PatientRe__docID__31B762FC">
+          <AssociationSet Name="FK__PatientRe__docID__7C1A6C5A" Association="Self.FK__PatientRe__docID__7C1A6C5A">
             <End Role="DocumentMetadata" EntitySet="DocumentMetadata" />
             <End Role="PatientRecord" EntitySet="PatientRecord" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientRe__geogr__30C33EC3" Association="Self.FK__PatientRe__geogr__30C33EC3">
+          <AssociationSet Name="FK__PatientRe__geogr__7B264821" Association="Self.FK__PatientRe__geogr__7B264821">
             <End Role="GeoCodes" EntitySet="GeoCodes" />
             <End Role="PatientRecord" EntitySet="PatientRecord" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientRe__modif__32AB8735" Association="Self.FK__PatientRe__modif__32AB8735">
+          <AssociationSet Name="FK__PatientRe__modif__7D0E9093" Association="Self.FK__PatientRe__modif__7D0E9093">
             <End Role="ModificationHistory" EntitySet="ModificationHistory" />
             <End Role="PatientRecord" EntitySet="PatientRecord" />
           </AssociationSet>
-          <AssociationSet Name="FK__Treatment__patie__3587F3E0" Association="Self.FK__Treatment__patie__3587F3E0">
+          <AssociationSet Name="FK__Treatment__drugI__01D345B0" Association="Self.FK__Treatment__drugI__01D345B0">
+            <End Role="DrugsManagementSystem" EntitySet="DrugsManagementSystem" />
+            <End Role="TreatmentRecord" EntitySet="TreatmentRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Treatment__patie__02C769E9" Association="Self.FK__Treatment__patie__02C769E9">
             <End Role="PatientRecord" EntitySet="PatientRecord" />
             <End Role="TreatmentRecord" EntitySet="TreatmentRecord" />
           </AssociationSet>
-          <AssociationSet Name="FK__Treatment__worke__367C1819" Association="Self.FK__Treatment__worke__367C1819">
+          <AssociationSet Name="FK__Treatment__worke__03BB8E22" Association="Self.FK__Treatment__worke__03BB8E22">
             <End Role="iCareWorker" EntitySet="iCareWorker" />
             <End Role="TreatmentRecord" EntitySet="TreatmentRecord" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserPassword__ID__19DFD96B" Association="Self.FK__UserPassword__ID__19DFD96B">
+          <AssociationSet Name="FK__UserPassword__ID__634EBE90" Association="Self.FK__UserPassword__ID__634EBE90">
             <End Role="iCareUser" EntitySet="iCareUser" />
             <End Role="UserPassword" EntitySet="UserPassword" />
           </AssociationSet>
@@ -338,6 +374,7 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <Property Name="drugID" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="drugName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TreatmentRecord" Relationship="Group4_iCAREDBModel.FK__Treatment__drugI__01D345B0" FromRole="DrugsManagementSystem" ToRole="TreatmentRecord" />
         </EntityType>
         <EntityType Name="GeoCodes">
           <Key>
@@ -346,6 +383,7 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <Property Name="ID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PatientRecord" Relationship="Group4_iCAREDBModel.FK__PatientRe__geogr__30C33EC3" FromRole="GeoCodes" ToRole="PatientRecord" />
+          <NavigationProperty Name="iCareWorker" Relationship="Group4_iCAREDBModel.FK__iCareWork__geogr__70A8B9AE" FromRole="GeoCodes" ToRole="iCareWorker" />
         </EntityType>
         <EntityType Name="iCareAdmin">
           <Key>
@@ -379,6 +417,8 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <NavigationProperty Name="iCareAdmin" Relationship="Self.FK__iCareWork__creat__4E88ABD4" FromRole="iCareWorker" ToRole="iCareAdmin" />
           <NavigationProperty Name="UserRole" Relationship="Self.FK__iCareWork__userP__4F7CD00D" FromRole="iCareWorker" ToRole="UserRole" />
           <NavigationProperty Name="TreatmentRecord" Relationship="Group4_iCAREDBModel.FK__Treatment__worke__367C1819" FromRole="iCareWorker" ToRole="TreatmentRecord" />
+          <Property Name="geographicalUnit" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="GeoCodes" Relationship="Group4_iCAREDBModel.FK__iCareWork__geogr__70A8B9AE" FromRole="iCareWorker" ToRole="GeoCodes" />
           </EntityType>
         <EntityType Name="ModificationHistory">
           <Key>
@@ -538,6 +578,14 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
             <End Role="PatientRecord" EntitySet="PatientRecord" />
             <End Role="TreatmentRecord" EntitySet="TreatmentRecord" />
           </AssociationSet>
+          <AssociationSet Name="FK__Treatment__drugI__01D345B0" Association="Group4_iCAREDBModel.FK__Treatment__drugI__01D345B0">
+            <End Role="DrugsManagementSystem" EntitySet="DrugsManagementSystem" />
+            <End Role="TreatmentRecord" EntitySet="TreatmentRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK__iCareWork__geogr__70A8B9AE" Association="Group4_iCAREDBModel.FK__iCareWork__geogr__70A8B9AE">
+            <End Role="GeoCodes" EntitySet="GeoCodes" />
+            <End Role="iCareWorker" EntitySet="iCareWorker" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PatientRecord">
           <Key>
@@ -559,6 +607,8 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <NavigationProperty Name="GeoCodes" Relationship="Group4_iCAREDBModel.FK__PatientRe__geogr__30C33EC3" FromRole="PatientRecord" ToRole="GeoCodes" />
           <NavigationProperty Name="ModificationHistory" Relationship="Group4_iCAREDBModel.FK__PatientRe__modif__32AB8735" FromRole="PatientRecord" ToRole="ModificationHistory" />
           <NavigationProperty Name="TreatmentRecord" Relationship="Group4_iCAREDBModel.FK__Treatment__patie__3587F3E0" FromRole="PatientRecord" ToRole="TreatmentRecord" />
+          <Property Name="doctorCount" Type="Int32" />
+          <Property Name="nurseCount" Type="Int32" />
         </EntityType>
         <EntityType Name="TreatmentRecord">
           <Key>
@@ -571,6 +621,8 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <Property Name="workerID" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="iCareWorker" Relationship="Group4_iCAREDBModel.FK__Treatment__worke__367C1819" FromRole="TreatmentRecord" ToRole="iCareWorker" />
           <NavigationProperty Name="PatientRecord" Relationship="Group4_iCAREDBModel.FK__Treatment__patie__3587F3E0" FromRole="TreatmentRecord" ToRole="PatientRecord" />
+          <Property Name="drugID" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="DrugsManagementSystem" Relationship="Group4_iCAREDBModel.FK__Treatment__drugI__01D345B0" FromRole="TreatmentRecord" ToRole="DrugsManagementSystem" />
         </EntityType>
         <Association Name="FK__PatientRe__docID__31B762FC">
           <End Type="Group4_iCAREDBModel.DocumentMetadata" Role="DocumentMetadata" Multiplicity="0..1" />
@@ -629,6 +681,30 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
             </Principal>
             <Dependent Role="TreatmentRecord">
               <PropertyRef Name="patientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Treatment__drugI__01D345B0">
+          <End Type="Group4_iCAREDBModel.DrugsManagementSystem" Role="DrugsManagementSystem" Multiplicity="0..1" />
+          <End Type="Group4_iCAREDBModel.TreatmentRecord" Role="TreatmentRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DrugsManagementSystem">
+              <PropertyRef Name="drugID" />
+            </Principal>
+            <Dependent Role="TreatmentRecord">
+              <PropertyRef Name="drugID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__iCareWork__geogr__70A8B9AE">
+          <End Type="Group4_iCAREDBModel.GeoCodes" Role="GeoCodes" Multiplicity="0..1" />
+          <End Type="Group4_iCAREDBModel.iCareWorker" Role="iCareWorker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeoCodes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="iCareWorker">
+              <PropertyRef Name="geographicalUnit" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -695,6 +771,7 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <EntitySetMapping Name="iCareWorker">
             <EntityTypeMapping TypeName="Group4_iCAREDBModel.iCareWorker">
               <MappingFragment StoreEntitySet="iCareWorker">
+                <ScalarProperty Name="geographicalUnit" ColumnName="geographicalUnit" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="profession" ColumnName="profession" />
                 <ScalarProperty Name="creator" ColumnName="creator" />
@@ -733,6 +810,8 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <EntitySetMapping Name="PatientRecord">
             <EntityTypeMapping TypeName="Group4_iCAREDBModel.PatientRecord">
               <MappingFragment StoreEntitySet="PatientRecord">
+                <ScalarProperty Name="nurseCount" ColumnName="nurseCount" />
+                <ScalarProperty Name="doctorCount" ColumnName="doctorCount" />
                 <ScalarProperty Name="modifierID" ColumnName="modifierID" />
                 <ScalarProperty Name="docID" ColumnName="docID" />
                 <ScalarProperty Name="geographicalUnit" ColumnName="geographicalUnit" />
@@ -751,6 +830,7 @@ warning 6035: The relationship 'FK__UserPassw__encry__1AD3FDA4' has columns that
           <EntitySetMapping Name="TreatmentRecord">
             <EntityTypeMapping TypeName="Group4_iCAREDBModel.TreatmentRecord">
               <MappingFragment StoreEntitySet="TreatmentRecord">
+                <ScalarProperty Name="drugID" ColumnName="drugID" />
                 <ScalarProperty Name="workerID" ColumnName="workerID" />
                 <ScalarProperty Name="patientID" ColumnName="patientID" />
                 <ScalarProperty Name="treatmentDate" ColumnName="treatmentDate" />

@@ -18,6 +18,7 @@ namespace Group4_iCAREAPP.Models
         public GeoCodes()
         {
             this.PatientRecord = new HashSet<PatientRecord>();
+            this.iCareWorker = new HashSet<iCareWorker>();
         }
     
         public string ID { get; set; }
@@ -25,5 +26,7 @@ namespace Group4_iCAREAPP.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PatientRecord> PatientRecord { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<iCareWorker> iCareWorker { get; set; }
     }
 }

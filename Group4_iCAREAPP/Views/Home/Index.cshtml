@@ -3,12 +3,17 @@
 }
 
 <head>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" /> 
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
+
+
 
 <main>
     <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">iCARE Healthcare System</h1>
+        <h1 id="title" style="text-align:center">iCARE Healthcare System</h1>
 
         <!--Login successful message-->
         @if (TempData["LoginMessage"] != null)
@@ -27,16 +32,58 @@
 
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Welcome to the iCARE healthcare system!</h2>
-            <p>
-                This is a healthcare system used by doctors nurses, and admins.
-                The goal of the system is to allow workers to see their active patients and patient data.
-                This is a system created by Group4.
-            </p>
-        </section>
-    </div>
+    <!-- <div class="row">
+                <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+                    <h2 id="gettingStartedTitle">Welcome to the iCARE Healthcare System!</h2>
+                </section>
+            </div>-->
+    <body>
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <img src="https://showme.missouri.edu/wp-content/uploads/2023/06/University-Hospital-Spring01-Feature-940x529.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img src="https://i.ytimg.com/vi/owxj6Ev4wPk/maxresdefault.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img src="https://i.ytimg.com/vi/hIZvll7ISI4/maxresdefault.jpg" style="width:100%">
+            </div>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
+        <script>
+            let slideIndex = 0;
+            showSlides();
+
+            function showSlides() {
+                let i;
+                let slides = document.getElementsByClassName("mySlides");
+                let dots = document.getElementsByClassName("dot");
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > slides.length) { slideIndex = 1 }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+                setTimeout(showSlides, 2000); // Change image every 2 seconds
+            }
+        </script>
+
+    </body>
 
     <button type="button" onclick="location.href='@Url.Action("Index", "ManageAccounts")'">Manage Accounts for Admin</button>
     <button type="button" onclick="location.href='@Url.Action("Index", "DisplayPalette")'">Palette</button>

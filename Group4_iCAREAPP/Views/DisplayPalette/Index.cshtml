@@ -7,11 +7,16 @@
 <h2>Palette</h2>
 
 <p>
-    <button type="button" onclick="location.href='@Url.Action("Create", "DisplayPalette")'">Create New Document</button>
+    <button type="button" onclick="location.href='@Url.Action("Create", "DisplayPalette")'">Create New Document</button> <!--Needs to lead to new page where you can choose type of document to be created-->
 </p>
 
 <p>
     <button type="button" onclick="location.href='@Url.Action("Details", "DisplayPalette")'">View Documents</button>
+
+</p>
+
+<p>
+    <button type="button" onclick="location.href='@Url.Action("Create", "ImportImage")'">Import Image</button> <!--Move this button to after you click create new document, one of the options of type of doc to be created-->
 
 </p>
 

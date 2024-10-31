@@ -9,7 +9,7 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm" style="background-color: navy;">
         <div class="container">
             @Html.ActionLink("iCARE", "Index", "Home", null, new { @class = "navbar-brand" })
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
@@ -28,6 +28,7 @@
                             <li>@Html.ActionLink("Palette", "Index", "DisplayPalette", new { area = "" }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("Create Patients", "Index", "ManagePatient", new { area = "" }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("Assign Patients", "Index", "AssignPatient", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("iCARE Board", "Index", "iCAREBoard", new { area = "" }, new { @class = "nav-link" })</li>
                         }
 
                         <li>@Html.ActionLink("Logout", "Logout", "UserAuthentication", null, new { @class = "nav-link" })</li>

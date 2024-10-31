@@ -315,6 +315,7 @@
     <Content Include="Views\AssignPatient\Details.cshtml" />
     <Content Include="Views\AssignPatient\Edit.cshtml" />
     <Content Include="Views\AssignPatient\Index.cshtml" />
+    <Content Include="Views\iCAREBoard\_PatientList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

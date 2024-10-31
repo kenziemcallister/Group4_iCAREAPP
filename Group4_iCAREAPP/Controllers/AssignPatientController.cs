@@ -39,7 +39,7 @@ namespace Group4_iCAREAPP.Controllers
         // GET: AssignPatient/Create
         public ActionResult Create()
         {
-            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession");
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID");
             ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name");
             return View();
         }
@@ -59,7 +59,7 @@ namespace Group4_iCAREAPP.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession", treatmentRecord.workerID);
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID", treatmentRecord.workerID);
             ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
             return View(treatmentRecord);
         }
@@ -76,7 +76,7 @@ namespace Group4_iCAREAPP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession", treatmentRecord.workerID);
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID", treatmentRecord.workerID);
             ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
             return View(treatmentRecord);
         }
@@ -94,7 +94,7 @@ namespace Group4_iCAREAPP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession", treatmentRecord.workerID);
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID", treatmentRecord.workerID);
             ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
             return View(treatmentRecord);
         }

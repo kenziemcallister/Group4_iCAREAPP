@@ -42,21 +42,28 @@ namespace Group4_iCAREAPP.Controllers
             return View(documentMetadata);
         }
 
-
-        // GET: ImportImage/Details/5
+        // GET : Details
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             DocumentMetadata documentMetadata = db.DocumentMetadata.Find(id);
             if (documentMetadata == null)
             {
                 return HttpNotFound();
             }
+
+            // Check if the file exists in the UploadedImages folder
+            string filePath = Path.Combine(Server.MapPath("~/Content/UploadedImages"), documentMetadata.docName);
+            ViewBag.FileExists = System.IO.File.Exists(filePath);
+            ViewBag.FileUrl = Url.Content("~/Content/UploadedImages" + documentMetadata.docName); 
+
             return View(documentMetadata);
         }
+
 
         // GET: ImportImage/Create
         public ActionResult Create()
@@ -112,6 +119,33 @@ namespace Group4_iCAREAPP.Controllers
 
             ViewBag.userID = new SelectList(db.iCareWorker, "ID", "profession", documentMetadata.userID);
             return View(documentMetadata);
+        }
+
+        //GET : ImportImage/Download/5
+        public ActionResult Download(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            DocumentMetadata documentMetadata = db.DocumentMetadata.Find(id);
+            if (documentMetadata == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Set the file path
+            string filePath = Path.Combine(Server.MapPath("~/UploadedImages"), documentMetadata.docName);
+
+            // Check if the file exists
+            if (!System.IO.File.Exists(filePath))
+            {
+                return HttpNotFound(); // Handle missing file
+            }
+
+            // Return the file as a download
+            return File(filePath, MimeMapping.GetMimeMapping(documentMetadata.docName), documentMetadata.docName);
         }
 
 

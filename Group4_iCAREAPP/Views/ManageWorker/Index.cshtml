@@ -4,13 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Worker Accounts</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<p>
-    @Html.ActionLink("Back to Home", "Index", "Home")
+    <button type="button" onclick="location.href='@Url.Action("Create", "ManageWorker")'">Create New Worker</button>
+    <button type="button" onclick="location.href='@Url.Action("Index", "Home")'">Back</button>
 </p>
 <table class="table">
     <tr>

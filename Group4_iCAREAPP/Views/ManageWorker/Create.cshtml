@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create New Worker</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,11 +12,12 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>iCareWorker</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">
+            Userd ID *
+        </label>
         <div class="col-md-10">
             @Html.DropDownList("ID", ViewBag.UserID as SelectList, "Select User ID", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
@@ -24,7 +25,9 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.profession, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">
+            Profession
+        </label>
         <div class="col-md-10">
             @Html.DropDownList("profession", ViewBag.Profession as SelectList, "Select Profession", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.profession, "", new { @class = "text-danger" })
@@ -33,7 +36,9 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.creator, "creator", htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">
+            Creator ID *
+        </label>
         <div class="col-md-10">
             @Html.DropDownList("ID", ViewBag.UserID as SelectList, "Select User ID", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.creator, "", new { @class = "text-danger" })
@@ -41,23 +46,29 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.userPermission, "userPermission", htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-10">
+            User Permission Number *
+        </label>
         <div class="col-md-10">
             @Html.DropDownList("userPermission", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.userPermission, "", new { @class = "text-danger" })
         </div>
     </div>
-
+    <h2></h2>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" value="Submit" class="button" />
+            <button type="button" onclick="location.href='@Url.Action("Index", "ManageWorker")'">Back</button>
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <p>
+        
+
+    </p>
 </div>
 
 @section Scripts {

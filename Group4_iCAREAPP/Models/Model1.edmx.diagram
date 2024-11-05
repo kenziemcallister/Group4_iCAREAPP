@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="17e4c5d3ab4649a0a40b525263d54398" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="17e4c5d3ab4649a0a40b525263d54398" Name="Diagram1" ZoomLevel="47">
         <EntityTypeShape EntityType="Group4_iCAREDBModel.DocumentMetadata" Width="1.5" PointX="7.5" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Group4_iCAREDBModel.DrugsDictionary" Width="1.5" PointX="5.75" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Group4_iCAREDBModel.DrugsManagementSystem" Width="1.5" PointX="7.75" PointY="6.875" IsExpanded="true" />
@@ -30,7 +30,6 @@
         <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__patie__3587F3E0" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__drugI__01D345B0" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__iCareWork__geogr__70A8B9AE" />
-        <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__docID__2022C2A6" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

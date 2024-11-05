@@ -24,6 +24,9 @@
 
         <dt>@Html.DisplayNameFor(model => model.ModificationHistory.description)</dt>
         <dd>@Html.DisplayFor(model => model.ModificationHistory.description)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.docType) </dt>
+        <dd>@Html.DisplayFor(model => model.docType) </dd>
     </dl>
 </div>
 
@@ -37,7 +40,10 @@ else
 }
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.docID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.docID })
+</p>
+
+<p>
+    <button type="button" onclick="location.href='@Url.Action("Details", "DisplayPalette")'">Back</button>
 </p>
 

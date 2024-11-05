@@ -138,6 +138,7 @@
     <Compile Include="Controllers\ManageAccountsController.cs" />
     <Compile Include="Controllers\ManageDocumentController.cs" />
     <Compile Include="Controllers\ManagePatientController.cs" />
+    <Compile Include="Controllers\ManageTreatmentController.cs" />
     <Compile Include="Controllers\ManageWorkerController.cs" />
     <Compile Include="Controllers\UserAuthenticationController.cs" />
     <Compile Include="Global.asax.cs">
@@ -316,6 +317,11 @@
     <Content Include="Views\AssignPatient\Edit.cshtml" />
     <Content Include="Views\AssignPatient\Index.cshtml" />
     <Content Include="Views\iCAREBoard\_PatientList.cshtml" />
+    <Content Include="Views\ManageTreatment\Create.cshtml" />
+    <Content Include="Views\ManageTreatment\Delete.cshtml" />
+    <Content Include="Views\ManageTreatment\Details.cshtml" />
+    <Content Include="Views\ManageTreatment\Edit.cshtml" />
+    <Content Include="Views\ManageTreatment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

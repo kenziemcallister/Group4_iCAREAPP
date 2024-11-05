@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Group4_iCAREAPP.Models.DocumentMetadata>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Document List with Previews</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>Preview</th>
+        <th>@Html.DisplayNameFor(model => model.docName)</th>
+        <th>@Html.DisplayNameFor(model => model.dateOfCreation)</th>
+        <th>@Html.DisplayNameFor(model => model.versions)</th>
+        <th>@Html.DisplayNameFor(model => model.iCareWorker.profession)</th>
+        <th>@Html.DisplayNameFor(model => model.ModificationHistory.description)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.docName)</td>
+            <td>@Html.DisplayFor(modelItem => item.dateOfCreation)</td>
+            <td>@Html.DisplayFor(modelItem => item.versions)</td>
+            <td>@Html.DisplayFor(modelItem => item.iCareWorker.profession)</td>
+            <td>@Html.DisplayFor(modelItem => item.ModificationHistory.description)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.docID }) |
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,66 @@
+﻿@model Group4_iCAREAPP.Models.TreatmentRecord
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TreatmentRecord</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.treatmentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.treatmentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.iCareWorker.profession)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.iCareWorker.profession)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PatientRecord.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PatientRecord.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DrugsManagementSystem.drugName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DrugsManagementSystem.drugName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentMetadata.userID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocumentMetadata.userID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.treatmentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

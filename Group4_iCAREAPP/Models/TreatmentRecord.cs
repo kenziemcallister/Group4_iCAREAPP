@@ -20,9 +20,11 @@ namespace Group4_iCAREAPP.Models
         public string patientID { get; set; }
         public string workerID { get; set; }
         public string drugID { get; set; }
+        public string docID { get; set; }
     
         public virtual iCareWorker iCareWorker { get; set; }
         public virtual PatientRecord PatientRecord { get; set; }
         public virtual DrugsManagementSystem DrugsManagementSystem { get; set; }
+        public virtual DocumentMetadata DocumentMetadata { get; set; }
     }
 }

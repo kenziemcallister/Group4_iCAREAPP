@@ -30,6 +30,7 @@
         <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__patie__3587F3E0" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__drugI__01D345B0" />
         <AssociationConnector Association="Group4_iCAREDBModel.FK__iCareWork__geogr__70A8B9AE" />
+        <AssociationConnector Association="Group4_iCAREDBModel.FK__Treatment__docID__2022C2A6" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

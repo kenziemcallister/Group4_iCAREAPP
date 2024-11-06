@@ -39,12 +39,10 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ManageDocument/Create
         public ActionResult Create(string docType)
         {
-            ViewBag.userID = new SelectList(db.iCareWorker, "ID", "ID");
+            ViewBag.UserID = new SelectList(db.iCareWorker, "ID", "ID"); 
             ViewBag.docID = new SelectList(db.ModificationHistory, "ID", "description");
-            var docTypes = db.DocumentMetadata.Select(d => d.docType).Distinct().ToList();
-            ViewBag.docType = new SelectList(db.DocumentMetadata, "docType", "docType");
+            ViewBag.DocType = docType;
 
-            TempData["DocType"] = docType; // Store the document type in TempData
             var model = new DocumentMetadata(); // Create your metadata model
             return View(model);
         }
@@ -58,31 +56,27 @@ namespace Group4_iCAREAPP.Controllers
         {
             if (ModelState.IsValid)
             {
+                documentMetadata.docType = docType;
+
                 db.DocumentMetadata.Add(documentMetadata);
                 db.SaveChanges();
 
                 // Redirect based on the document type
                 if (docType == "PATIENT")
                 {
-                    return RedirectToAction("Create", "ManagePatient", new { id = documentMetadata.docID });
+                    return RedirectToAction("Create", "ManagePatient", new { docID = documentMetadata.docID });
                 }
                 else if (docType == "TREATMENT")
                 {
-                    return RedirectToAction("Create", "ManageTreatment", new { id = documentMetadata.docID });
+                    return RedirectToAction("Create", "ManageTreatment", new { docID = documentMetadata.docID });
                 }
                 else if (docType == "UPLOADS")
                 {
-                    return RedirectToAction("Create", "ImportImage", new { id = documentMetadata.docID });
-                }
-                else
-                {
-                    // Handle the case where the docType does not match any known type
-                    return RedirectToAction("Error", "Home"); // Or any other fallback action
+                    return RedirectToAction("Create", "ImportImage", new { docID = documentMetadata.docID });
                 }
             }
             ViewBag.userID = new SelectList(db.iCareWorker, "ID", "ID", documentMetadata.userID);
             ViewBag.docID = new SelectList(db.ModificationHistory, "ID", "description", documentMetadata.docID);
-            //ViewBag.DocType = docType;
             return View(documentMetadata);
         }
 

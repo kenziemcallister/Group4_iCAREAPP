@@ -6,6 +6,18 @@
 
 <h2>Document Information</h2>
 
+@{ 
+    // Error message:
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>        
+}
+
 
 @using (Html.BeginForm()) 
 {
@@ -29,7 +41,7 @@
             User ID *
         </label>
         <div class="col-md-10">
-            @Html.DropDownList("userID", ViewBag.UserID as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("userID", ViewBag.UserID as SelectList, "Select User ID", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.userID, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -69,7 +81,7 @@
             Document Type
         </label>
         <div class="col-md-10">
-            @Html.DropDownList("docType", ViewBag.docType as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.EditorFor(model => model.docType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
             @Html.ValidationMessageFor(model => model.versions, "", new { @class = "text-danger" })
         </div>
     </div>

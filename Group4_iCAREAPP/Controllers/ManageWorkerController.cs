@@ -13,6 +13,16 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
         // GET: ManageWorker
         public ActionResult Index()
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
+
             // Retrieve all workers along with their roles and geographical units
             var workers = db.iCareWorker.Include(w => w.UserRole).Include(w => w.GeoCodes).ToList();
             return View(workers);
@@ -35,6 +45,16 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
         // GET: ManageWorker/Create
         public ActionResult Create()
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
+
             // Get all user IDs that are not already assigned as a worker
             var unassignedUsers = db.iCareUser
                                      .Where(u => !db.iCareWorker.Any(w => w.ID == u.ID))

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -25,6 +27,8 @@ namespace Group4_iCAREAPP.Controllers
         // GET: UserAuthentication/Details/5
         public ActionResult Details(string id)
         {
+            var userId = User.Identity.Name;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -54,16 +58,26 @@ namespace Group4_iCAREAPP.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.iCareUser.Add(iCareUser);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.iCareUser.Add(iCareUser);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if(ex.InnerException?.InnerException is SqlException sqlEx && sqlEx.Number == 2627)
+                    {
+                        ModelState.AddModelError("ID", "The username or password is taken.");
+                        ModelState.AddModelError("userShadow", " ");
+                    }
+                }
             }
 
             ViewBag.ID = new SelectList(db.iCareAdmin, "ID", "ID", iCareUser.ID);
             ViewBag.userShadow = new SelectList(db.UserPassword, "ID", "userName", iCareUser.userShadow);
             return View(iCareUser);
         }
-
         // GET: UserAuthentication/Edit/5
         public ActionResult Edit(string id)
         {

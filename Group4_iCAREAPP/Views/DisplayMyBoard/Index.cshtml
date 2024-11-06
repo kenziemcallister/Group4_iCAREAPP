@@ -36,14 +36,9 @@
             @Html.DisplayNameFor(model => model.treatmentArea)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DocumentMetadata.userID)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.GeoCodes.description)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModificationHistory.description)
-        </th>
+        
         <th></th>
     </tr>
 
@@ -75,13 +70,7 @@
                 @Html.DisplayFor(modelItem => item.treatmentArea)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DocumentMetadata.userID)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.GeoCodes.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModificationHistory.description)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |

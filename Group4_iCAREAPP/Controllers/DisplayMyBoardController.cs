@@ -26,20 +26,11 @@ namespace Group4_iCAREAPP.Controllers
             ViewBag.CurrentUser = currentUser;
             ViewBag.CurrentWorker = currentWorker;
 
-            // Pass the user ID to the view for the message to be displayed at the top of the index of DisplayMyBoard
-            ViewBag.UserId = userId;
-
-            // Fetch the user to get the first name
-            var user = db.iCareUser.FirstOrDefault(u => u.ID == userId);
-            if (user != null)
-            {
-                Session["FirstName"] = user.name; // Assuming 'name' is the first name of the user
-            }
-
             // Query TreatmentRecord to find patients assigned to the logged-in iCareWorker
             var assignedPatients = db.TreatmentRecord
-                .Where(tr => tr.workerID == userId) // Update this line if your foreign key is named differently
-                .Select(tr => tr.PatientRecord) // Assuming TreatmentRecord has a navigation property to PatientRecord
+                .Where(tr => tr.workerID == userId) 
+                .Select(tr => tr.PatientRecord) 
+                .Distinct()
                 .Include(pr => pr.DocumentMetadata) // Ensure this navigation property exists
                 .Include(pr => pr.GeoCodes) // Ensure this navigation property exists
                 .Include(pr => pr.ModificationHistory) // Ensure this navigation property exists

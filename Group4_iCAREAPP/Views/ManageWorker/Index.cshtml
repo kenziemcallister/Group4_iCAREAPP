@@ -11,37 +11,29 @@
     <button type="button" onclick="location.href='@Url.Action("Index", "Home")'">Back</button>
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.First().profession)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().userPermission) 
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.profession)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.userPermission) 
-            </td>
-            <td>
-                <!--@Html.ActionLink("Edit", "Edit", new { id = item.ID }) | -->
-                <!--@Html.ActionLink("Details", "Details", new { id = item.ID }) | -->
-                <!-- @Html.ActionLink("Delete", "Delete", new { id = item.ID }) -->
-            </td>
+            <th>User ID</th>
+            <th>Profession</th>
+            <th>User Permission</th>
+            <th>Actions</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var worker in Model)
+        {
+            <tr>
+                <td>@worker.ID</td>
+                <td>@worker.profession</td>
+                <td>@worker.UserRole.roleName</td>
+                <td>
+                    <!-- Link to Edit page -->
+                    @Html.ActionLink("Edit", "Edit", new { id = worker.ID })
+                    <!-- Optionally, link to Delete page -->
+                    <!--@Html.ActionLink("Delete", "Delete", new { id = worker.ID }) -->
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 

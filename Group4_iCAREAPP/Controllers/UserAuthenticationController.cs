@@ -56,7 +56,7 @@ namespace Group4_iCAREAPP.Controllers
             {
                 db.iCareUser.Add(iCareUser);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.ID = new SelectList(db.iCareAdmin, "ID", "ID", iCareUser.ID);

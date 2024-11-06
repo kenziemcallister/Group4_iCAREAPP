@@ -17,8 +17,14 @@ namespace Group4_iCAREAPP.Controllers
         // GET: DisplayMyBoard
         public ActionResult Index()
         {
-            // Get the user ID from the logged-in user's identity
-            var userId = User.Identity.Name; // Ensure this matches how the ID is stored in your User model
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
 
             // Pass the user ID to the view for the message to be displayed at the top of the index of DisplayMyBoard
             ViewBag.UserId = userId;

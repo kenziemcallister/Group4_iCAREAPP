@@ -41,6 +41,16 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ManagePatient/Create
         public ActionResult Create(string docID)
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
+
             DocumentMetadata documentMetadata = db.DocumentMetadata.Find(docID);
             if (documentMetadata == null)
             {

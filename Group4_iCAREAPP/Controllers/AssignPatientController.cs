@@ -19,6 +19,16 @@ namespace Group4_iCAREAPP.Controllers
         // GET: AssignPatient
         public ActionResult Index()
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
+
             var treatmentRecord = db.TreatmentRecord.Include(t => t.iCareWorker).Include(t => t.PatientRecord);
             return View(treatmentRecord.ToList());
         }
@@ -41,6 +51,16 @@ namespace Group4_iCAREAPP.Controllers
         // GET: AssignPatient/Create
         public ActionResult Create()
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
+
             var drugs = db.DrugsManagementSystem.ToList();
 
             ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");

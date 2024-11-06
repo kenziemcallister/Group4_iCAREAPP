@@ -281,7 +281,6 @@
     <Content Include="Views\iCAREBoard\Edit.cshtml" />
     <Content Include="Views\iCAREBoard\Index.cshtml" />
     <Content Include="Views\DisplayPalette\Create.cshtml" />
-    <Content Include="Views\DisplayPalette\Delete.cshtml" />
     <Content Include="Views\DisplayPalette\Details.cshtml" />
     <Content Include="Views\DisplayPalette\Edit.cshtml" />
     <Content Include="Views\DisplayPalette\Index.cshtml" />
@@ -322,7 +321,7 @@
     <Content Include="Views\ManageTreatment\Details.cshtml" />
     <Content Include="Views\ManageTreatment\Edit.cshtml" />
     <Content Include="Views\ManageTreatment\Index.cshtml" />
-	  <Content Include="Views\DisplayPalette\ChooseDoc.cshtml" />
+    <Content Include="Views\DisplayPalette\ChooseDoc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

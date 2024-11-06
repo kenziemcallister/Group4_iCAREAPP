@@ -18,6 +18,15 @@ namespace Group4_iCAREAPP.Controllers
         // GET: DisplayPalette
         public ActionResult Index()
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
             var documentMetadata = db.DocumentMetadata.Include(d => d.iCareWorker).Include(d => d.ModificationHistory);
             return View(documentMetadata.ToList());
         }
@@ -43,6 +52,15 @@ namespace Group4_iCAREAPP.Controllers
         // GET: DisplayPalette/ChooseDoc
         public ActionResult ChooseDoc()
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
             return View();
         }
 

@@ -4,75 +4,84 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create Treatment Record</h2>
 
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>TreatmentRecord</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Treatment ID *
-            </label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.treatmentID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.treatmentID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Description
-            </label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Treatment Date (MM/DD/YYYY)
-            </label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.treatmentDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Patient ID *
-            </label>
-            <div class="col-md-10">
-                @Html.DropDownList("patientID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.patientID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Worker ID *
-            </label>
-            <div class="col-md-10">
-                @Html.DropDownList("workerID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.workerID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <h2></h2>
-                <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
-                <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
-            </div>
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label col-md-10">
+            Treatment ID *
+        </label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.treatmentID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.treatmentID, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Description
+        </label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-10">
+            Treatment Date (MM/DD/YYYY)
+        </label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.treatmentDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Patient ID *
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("patientID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.patientID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Worker ID *
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("workerID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.workerID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-10">
+            Prescribed Drugs
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("drugID", (SelectList)ViewBag.DrugsList, "Select Prescribed Drugs", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.drugID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <h2></h2>
+            <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
+            <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
+        </div>
+    </div>
+</div>
 }
 
 @section Scripts {

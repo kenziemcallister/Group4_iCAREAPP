@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -39,6 +41,9 @@ namespace Group4_iCAREAPP.Controllers
         // GET: AssignPatient/Create
         public ActionResult Create()
         {
+            var drugs = db.DrugsManagementSystem.ToList();
+
+            ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
             ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID");
             ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name");
             return View();
@@ -49,18 +54,29 @@ namespace Group4_iCAREAPP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "treatmentID,description,treatmentDate,patientID,workerID")] TreatmentRecord treatmentRecord)
+        public ActionResult Create([Bind(Include = "treatmentID,description,treatmentDate,patientID,workerID,drugID")] TreatmentRecord treatmentRecord)
         {
             if (ModelState.IsValid)
             {
-                db.TreatmentRecord.Add(treatmentRecord);
-                db.SaveChanges();
+                try
+                {
+                    db.TreatmentRecord.Add(treatmentRecord);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException?.InnerException is SqlException sqlEx && sqlEx.Number == 2627)
+                    {
+                        ModelState.AddModelError("ID", "The Treatment ID is taken.");
+                    }
+                }
 
-                return RedirectToAction("Index");
             }
 
             ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID", treatmentRecord.workerID);
             ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
+            ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", treatmentRecord.drugID);
             return View(treatmentRecord);
         }
 

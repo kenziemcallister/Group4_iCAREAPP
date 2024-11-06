@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -62,12 +64,23 @@ namespace Group4_iCAREAPP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,treatedBy,docID,modifierID")] PatientRecord patientRecord)
-        {
+        { 
             if (ModelState.IsValid)
             {
-                db.PatientRecord.Add(patientRecord);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try 
+                {
+                    db.PatientRecord.Add(patientRecord);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException?.InnerException is SqlException sqlEx && sqlEx.Number == 2627)
+                    {
+                        ModelState.AddModelError("ID", "The Patient ID is taken.");
+                    }
+                }
+
             }
 
             ViewBag.DocID = patientRecord.docID;

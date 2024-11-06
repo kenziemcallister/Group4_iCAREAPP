@@ -37,7 +37,7 @@ namespace Group4_iCAREAPP.Controllers
         }
 
         // GET: ManageDocument/Create
-        public ActionResult Create(string docType)
+        public ActionResult Create()
         {
             ViewBag.UserID = new SelectList(db.iCareWorker, "ID", "ID"); 
             ViewBag.docID = new SelectList(db.ModificationHistory, "ID", "description");
@@ -60,6 +60,8 @@ namespace Group4_iCAREAPP.Controllers
 
                 db.DocumentMetadata.Add(documentMetadata);
                 db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
                 // Redirect based on the document type
                 if (docType == "PATIENT")

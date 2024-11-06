@@ -44,12 +44,13 @@ namespace Group4_iCAREAPP.Controllers
             DocumentMetadata documentMetadata = db.DocumentMetadata.Find(docID);
             if (documentMetadata == null)
             {
-                return HttpNotFound();
+                // add temporary error message:
+                TempData["ErrorMessage"] = "The document could not be found.";
+                return RedirectToAction("Create", "ManageDocument");
             }
 
 
             ViewBag.UserID = new SelectList(db.iCareUser, "ID", "ID"); // Dropdown for existing iCareUsers
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID");
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
 
@@ -82,7 +83,7 @@ namespace Group4_iCAREAPP.Controllers
 
             }
 
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
+            ViewBag.DocID = patientRecord.docID;
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);

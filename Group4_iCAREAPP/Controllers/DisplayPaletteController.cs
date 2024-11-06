@@ -40,6 +40,13 @@ namespace Group4_iCAREAPP.Controllers
             return View(documentMetadata.ToList());
         }
 
+        // GET: DisplayPalette/ChooseDoc
+        public ActionResult ChooseDoc()
+        {
+            return View();
+        }
+
+
         // GET: DisplayPalette/Create
         public ActionResult Create()
         {

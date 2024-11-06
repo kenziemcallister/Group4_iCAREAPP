@@ -39,6 +39,7 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ManageTreatment/Create
         public ActionResult Create()
         {
+            ViewBag.UserID = new SelectList(db.iCareUser, "ID", "ID"); // Dropdown for existing iCareUsers
             ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession");
             ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name");
             ViewBag.drugID = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");

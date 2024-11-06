@@ -7,9 +7,15 @@
 <h2>Which type of document would you like to create?</h2>
 
 <div>
-    <a href="@Url.Action("Create", "ManageDocument", new { docType = "Patient" })" class="btn btn-secondary">Patient Record</a>
-    <a href="@Url.Action("Create", "ManageDocument", new { docType = "Treatment" })" class="btn btn-secondary">Treatment Record</a>
-    <a href="@Url.Action("Create", "ManageDocument", new { docType = "ImportImage" })" class="btn btn-secondary">Import an Image</a>
+    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "PATIENT" })'">Patient Record</button>
+    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "TREATMENT" })'">Treatment Record</button>
+    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "UPLOADS" })'">Import an Image</button>
+
+    <!-- 
+    <a href="@Url.Action("Create", "ManageDocument", new { docType = "PATIENT" })" class="btn btn-secondary">Patient Record</a>
+    <a href="@Url.Action("Create", "ManageDocument", new { docType = "TREATMENT" })" class="btn btn-secondary">Treatment Record</a>
+    <a href="@Url.Action("Create", "ManageDocument", new { docType = "UPLOADS" })" class="btn btn-secondary">Import an Image</a>
+        -->
 
 
     @using (Html.BeginForm())

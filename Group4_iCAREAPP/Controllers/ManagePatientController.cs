@@ -50,7 +50,7 @@ namespace Group4_iCAREAPP.Controllers
             }
 
 
-            ViewBag.UserID = new SelectList(db.iCareUser, "ID", "ID"); // Dropdown for existing iCareUsers
+            ViewBag.UserID = new SelectList(db.iCareWorker, "ID", "ID"); // Dropdown for existing iCareWorkers
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
 

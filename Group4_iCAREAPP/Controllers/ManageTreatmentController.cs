@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -37,13 +39,33 @@ namespace Group4_iCAREAPP.Controllers
         }
 
         // GET: ManageTreatment/Create
-        public ActionResult Create()
+        public ActionResult Create(string docID)
         {
-            ViewBag.UserID = new SelectList(db.iCareUser, "ID", "ID"); // Dropdown for existing iCareUsers
-            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession");
-            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name");
+            DocumentMetadata documentMetadata = db.DocumentMetadata.Find(docID);
+            if (documentMetadata == null)
+            {
+                // add temporary error message:
+                TempData["ErrorMessage"] = "The document could not be found.";
+                return RedirectToAction("Create", "ManageDocument");
+            }
+
+            var userID = User.Identity.Name;
+
+            //Find distinct patients assigned to the logged in worker:
+            var assignedPatientIDs = db.TreatmentRecord
+                .Where(treatmentRecord => treatmentRecord.workerID == userID)
+                .Select(treatmentRecord => treatmentRecord.patientID)
+                .Distinct()
+                .ToList();
+
+            var assignedPatients = db.PatientRecord
+                .Where(patientRecord => assignedPatientIDs.Contains(patientRecord.ID))
+                .ToList();
+
+            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID");
+            ViewBag.assignedPatientID = new SelectList(assignedPatients, "ID", "name");
             ViewBag.drugID = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID");
+            ViewBag.docID = docID;
             return View();
         }
 
@@ -56,15 +78,25 @@ namespace Group4_iCAREAPP.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TreatmentRecord.Add(treatmentRecord);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.TreatmentRecord.Add(treatmentRecord);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException?.InnerException is SqlException sqlEx && sqlEx.Number == 2627)
+                    {
+                        ModelState.AddModelError("treatmentID", "The Treatment ID is taken.");
+                    }
+                }
             }
 
             ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "profession", treatmentRecord.workerID);
-            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
+            ViewBag.patientID = treatmentRecord.patientID;
             ViewBag.drugID = new SelectList(db.DrugsManagementSystem, "drugID", "drugName", treatmentRecord.drugID);
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", treatmentRecord.docID);
+            ViewBag.docID = treatmentRecord.docID;
             return View(treatmentRecord);
         }
 

@@ -54,6 +54,13 @@ namespace Group4_iCAREAPP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "docID,userID,docName,dateOfCreation,versions,docType")] DocumentMetadata documentMetadata, string docType)
         {
+            // Ensure docID isn't already taken:
+            bool docIDExists = db.DocumentMetadata.Any(d => d.docID == documentMetadata.docID);
+            if (docIDExists)
+            {
+                ModelState.AddModelError("docID", "The document ID has already been taken.");
+            }
+
             if (ModelState.IsValid)
             {
                 documentMetadata.docType = docType;

@@ -172,12 +172,34 @@ namespace Group4_iCAREAPP.Controllers
                 {
                     // Retrieve the user's first name
                     var user = db.iCareUser.SingleOrDefault(u => u.ID == model.ID);
+
+                    // Check if user is an admin:
+                    var adminUser = db.iCareAdmin.SingleOrDefault(admin => admin.ID == model.ID);
+                    // Check if user is an iCareWorker:
+                    var worker = db.iCareWorker.SingleOrDefault(w => w.ID == model.ID);
+
+
                     if (user != null)
                     {
                         // Store first name in session
                         Session["FirstName"] = user.name;
 
-                        TempData["LoginMessage"] = $"Login successful. Welcome to iCARE, {Session["FirstName"]}!"; //success message to display on the home page. see home page index html file for other part
+                        // If the user is an admin, store that user role:
+                        if (adminUser != null)
+                        {
+                            Session["Profession"] = "Admin";
+                        }
+                        // If the user is a worker, store their profession (Nurse or Doctor)
+                        else if (worker != null)
+                        {
+                            Session["Profession"] = worker.profession;
+                        }
+                        else
+                        {
+                            Session["Profession"] = "User";
+                        }
+
+                        TempData["LoginMessage"] = $"Login successful. Welcome to iCARE, {Session["Profession"]} {Session["FirstName"]}!"; //success message to display on the home page. see home page index html file for other part
 
                         FormsAuthentication.SetAuthCookie(model.ID, false);
                         return RedirectToAction("Index", "Home"); //if yes, redirect back to home

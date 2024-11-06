@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Group4_iCAREAPP.Models.TreatmentRecord>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.treatmentDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.iCareWorker.profession)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PatientRecord.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DrugsManagementSystem.drugName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocumentMetadata.userID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.treatmentDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.iCareWorker.profession)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PatientRecord.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DrugsManagementSystem.drugName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocumentMetadata.userID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.treatmentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.treatmentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.treatmentID })
+        </td>
+    </tr>
+}
+
+</table>

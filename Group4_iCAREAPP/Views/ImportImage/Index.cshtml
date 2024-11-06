@@ -18,6 +18,7 @@
         <th>@Html.DisplayNameFor(model => model.versions)</th>
         <th>@Html.DisplayNameFor(model => model.iCareWorker.profession)</th>
         <th>@Html.DisplayNameFor(model => model.ModificationHistory.description)</th>
+        <th>@Html.DisplayNameFor(model => model.docType)</th>
         <th></th>
     </tr>
 
@@ -49,10 +50,10 @@
             <td>@Html.DisplayFor(modelItem => item.versions)</td>
             <td>@Html.DisplayFor(modelItem => item.iCareWorker.profession)</td>
             <td>@Html.DisplayFor(modelItem => item.ModificationHistory.description)</td>
+            <td>@Html.DisplayFor(modelItem => item.docType)</td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.docID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.docID })
+                @Html.ActionLink("Details", "Details", new { id = item.docID })
             </td>
         </tr>
     }

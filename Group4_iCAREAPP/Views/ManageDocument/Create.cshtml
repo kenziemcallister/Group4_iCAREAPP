@@ -29,7 +29,7 @@
             User ID *
         </label>
         <div class="col-md-10">
-            @Html.DropDownList("userID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("userID", ViewBag.UserID as SelectList, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.userID, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -65,10 +65,20 @@
     </div>
 
     <div class="form-group">
+        <label class="control-label col-md-2">
+            Document Type
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("docType", ViewBag.docType as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.versions, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <h2></h2>
             <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
-            <button type="button" onclick="location.href='@Url.Action("Index", "DisplayPalette")'">Back</button>
+            <button type="button" onclick="location.href='@Url.Action("ChooseDoc", "DisplayPalette")'">Back</button>
         </div>
     </div>
 </div>

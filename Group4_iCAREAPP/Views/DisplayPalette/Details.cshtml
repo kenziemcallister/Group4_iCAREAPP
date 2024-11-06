@@ -24,6 +24,9 @@
         <th>
             <label>Description</label>
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.docType)
+        </th>
         <th></th>
     </tr>
 
@@ -46,8 +49,11 @@
                 @Html.DisplayFor(modelItem => item.ModificationHistory.description)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.docType)
+            </td>
+            <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.docID })
+                @Html.ActionLink("Details", "Details", "ImportImage", new { id = item.docID }, null)
             </td>
         </tr>
     }

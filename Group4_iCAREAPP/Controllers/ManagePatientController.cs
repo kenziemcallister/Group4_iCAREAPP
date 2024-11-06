@@ -39,11 +39,21 @@ namespace Group4_iCAREAPP.Controllers
         }
 
         // GET: ManagePatient/Create
-        public ActionResult Create()
+        public ActionResult Create(string docID)
         {
+            DocumentMetadata documentMetadata = db.DocumentMetadata.Find(docID);
+            if (documentMetadata == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            ViewBag.UserID = new SelectList(db.iCareUser, "ID", "ID"); // Dropdown for existing iCareUsers
             ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID");
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
+
+            ViewBag.DocID = docID;
             return View();
         }
 

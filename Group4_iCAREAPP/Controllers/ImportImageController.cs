@@ -79,13 +79,15 @@ namespace Group4_iCAREAPP.Controllers
 
             var users = db.iCareUser.ToList();
             ViewBag.userID = new SelectList(users, "ID", "ID");
+            ViewBag.docType = new SelectList(new[] { "PATIENT", "TREATMENT", "UPLOADS" });
+
             return View(documentMetadata); // Pass initialized object to the view
         }
 
         // POST: ImportImage/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "docID,userID,docName,dateOfCreation,versions")] DocumentMetadata documentMetadata, [Bind(Include = "dateOfModification,description")] ModificationHistory modificationHistory)
+        public ActionResult Create(HttpPostedFileBase file, [Bind(Include = "docID,userID,docName,dateOfCreation,versions,docType")] DocumentMetadata documentMetadata, [Bind(Include = "dateOfModification,description")] ModificationHistory modificationHistory)
         {
             if (file != null && file.ContentLength > 0 && ModelState.IsValid)
             {
@@ -101,23 +103,15 @@ namespace Group4_iCAREAPP.Controllers
                 documentMetadata.docName = Path.GetFileName(file.FileName);
                 documentMetadata.dateOfCreation = DateTime.Now;
 
-                // Set Modification History properties
-                modificationHistory.ID = documentMetadata.docID; // Match IDs
-                modificationHistory.dateOfModification = DateTime.Now; // or use the posted value if it should come from the form
-
-                // Add to the database
-                db.ModificationHistory.Add(modificationHistory);
-
-                // Populate versions from the submitted modification history date
-                documentMetadata.versions = modificationHistory.dateOfModification?.ToString("yyyy-MM-dd"); // Set the versions field as a formatted string
-
                 db.DocumentMetadata.Add(documentMetadata);
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "DisplayPalette");
             }
 
-            ViewBag.userID = new SelectList(db.iCareWorker, "ID", "profession", documentMetadata.userID);
+            ViewBag.userID = new SelectList(db.iCareWorker, "ID", "ID", documentMetadata.userID);
+            ViewBag.docType = new SelectList(new[] { "PATIENT", "TREATMENT", "UPLOADS" }, documentMetadata.docType); // Ensure the selected value is retained in case of validation failure
+
             return View(documentMetadata);
         }
 
@@ -172,7 +166,7 @@ namespace Group4_iCAREAPP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "docID,userID,docName,dateOfCreation,versions")] DocumentMetadata documentMetadata)
+        public ActionResult Edit([Bind(Include = "docID,userID,docName,dateOfCreation,versions,docType")] DocumentMetadata documentMetadata)
         {
             if (ModelState.IsValid)
             {

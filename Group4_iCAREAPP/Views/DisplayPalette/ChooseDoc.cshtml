@@ -1,0 +1,30 @@
+﻿@model Group4_iCAREAPP.Models.DocumentMetadata
+
+@{
+    ViewBag.Title = "ChooseDoc";
+}
+
+<h2>Which type of document would you like to create?</h2>
+
+<div>
+    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "PATIENT" })'">Patient Record</button>
+    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "TREATMENT" })'">Treatment Record</button>
+    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "UPLOADS" })'">Import an Image</button>
+
+    <!-- 
+    <a href="@Url.Action("Create", "ManageDocument", new { docType = "PATIENT" })" class="btn btn-secondary">Patient Record</a>
+    <a href="@Url.Action("Create", "ManageDocument", new { docType = "TREATMENT" })" class="btn btn-secondary">Treatment Record</a>
+    <a href="@Url.Action("Create", "ManageDocument", new { docType = "UPLOADS" })" class="btn btn-secondary">Import an Image</a>
+        -->
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using Group4_iCAREAPP.Models;
 //using Microsoft.AspNet.Identity;
 
-
 namespace Group4_iCAREAPP.Controllers
 {
     public class DisplayPaletteController : Controller
@@ -40,6 +39,13 @@ namespace Group4_iCAREAPP.Controllers
             var documentMetadata = db.DocumentMetadata.Include(d => d.iCareWorker).Include(d => d.ModificationHistory);
             return View(documentMetadata.ToList());
         }
+
+        // GET: DisplayPalette/ChooseDoc
+        public ActionResult ChooseDoc()
+        {
+            return View();
+        }
+
 
         // GET: DisplayPalette/Create
         public ActionResult Create()
@@ -83,7 +89,7 @@ namespace Group4_iCAREAPP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.userID = new SelectList(db.iCareWorker, "ID", "profession", documentMetadata.userID);
+            ViewBag.userID = new SelectList(db.iCareWorker, "ID", "ID", documentMetadata.userID);
             ViewBag.docID = new SelectList(db.ModificationHistory, "ID", "description", documentMetadata.docID);
             return View(documentMetadata);
         }
@@ -101,7 +107,7 @@ namespace Group4_iCAREAPP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.userID = new SelectList(db.iCareWorker, "ID", "profession", documentMetadata.userID);
+            ViewBag.userID = new SelectList(db.iCareWorker, "ID", "ID", documentMetadata.userID);
             ViewBag.docID = new SelectList(db.ModificationHistory, "ID", "description", documentMetadata.docID);
             return View(documentMetadata);
         }

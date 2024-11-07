@@ -11,7 +11,8 @@ namespace Group4_iCAREAPP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TreatmentRecord
     {
         public string treatmentID { get; set; }

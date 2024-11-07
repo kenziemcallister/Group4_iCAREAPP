@@ -7,23 +7,59 @@
 <h2>Create Treatment Record</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "AssignPatient", FormMethod.Post, new { id = "assignPatientForm" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
+
+    <h4>TreatmentRecord</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div id="responseMessage" class="text-success"></div> <!-- Area for success/error messages -->
+
+
+<div class="form-horizontal">
+    <hr />
+
+    <!-- WORKER -->
     <div class="form-group">
-        <label class="control-label col-md-10">
-            Treatment ID *
+        <label class="control-label col-md-2">
+            Worker *
         </label>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.treatmentID, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.treatmentID, "", new { @class = "text-danger" })
+            <input type="text" class="form-control" value="@ViewBag.workerID" readonly />
+            @Html.HiddenFor(model => model.workerID)
+            @*
+                @Html.DropDownList("workerID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.workerID, "", new { @class = "text-danger" })
+            *@
         </div>
     </div>
 
+    <!-- PATIENT -->
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Patient *
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("patientID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.patientID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- TREATMENT DATE -->
+    <div class="form-group">
+        <label class="control-label col-md-10">
+            Treatment Date *
+        </label>
+        <div class="col-md-10">
+            <!-- makes a date field for the user to fill in -->
+            @Html.TextBoxFor(model => model.treatmentDate, new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- DESCRIPTION -->
     <div class="form-group">
         <label class="control-label col-md-2">
             Description
@@ -34,36 +70,7 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="control-label col-md-10">
-            Treatment Date (MM/DD/YYYY)
-        </label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.treatmentDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">
-            Patient ID *
-        </label>
-        <div class="col-md-10">
-            @Html.DropDownList("patientID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.patientID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">
-            Worker ID *
-        </label>
-        <div class="col-md-10">
-            @Html.DropDownList("workerID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.workerID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
+    <!-- PRESCRIBED DRUGS -->
     <div class="form-group">
         <label class="control-label col-md-10">
             Prescribed Drugs
@@ -74,6 +81,7 @@
         </div>
     </div>
 
+    <!-- SUBMIT -->
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <h2></h2>
@@ -84,6 +92,40 @@
 </div>
 }
 
+
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @* @Scripts.Render("~/bundles/jqueryval") *@
+    <script>
+        // AJAX Submission
+        $("#assignPatientForm").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr("action"),
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data.success) {
+                        $("#responseMessage").html(data.message).css("color", "green");
+
+
+                        // MOST RECENTLY ADDED THAT I DIDNT GET TO CHECK:
+                        // clear form fields after successful submission
+                        $("#assignPatientForm")[0].reset();
+
+                        // reset any dynamically set dropdowns or fields
+                        $("#patientID").val("");
+                        $("#drugID").val("");
+
+                        // END OF MOST RECENTLY ADDED THAT I DIDNT GET TO CHECK
+
+                    } else {
+                        $("#responseMessage").html(data.message).css("color", "red");
+                    }
+                },
+                error: function () {
+                    $("#responseMessage").html("An error occurred while processing your request.").css("color", "red");
+                }
+            });
+        });
+    </script>
 }

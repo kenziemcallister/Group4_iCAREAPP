@@ -1,33 +1,35 @@
-﻿@model IEnumerable<Group4_iCAREAPP.Models.PatientRecord>
+﻿@model IEnumerable<Group4_iCAREAPP.Controllers.PatientViewModel>
 
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.name)</th>
-        <th>@Html.DisplayNameFor(model => model.address)</th>
-        <th>@Html.DisplayNameFor(model => model.dateOfBirth)</th>
-        <th>@Html.DisplayNameFor(model => model.weight)</th>
-        <th>@Html.DisplayNameFor(model => model.height)</th>
-        <th>@Html.DisplayNameFor(model => model.bloodGroup)</th>
-        <th>@Html.DisplayNameFor(model => model.bedID)</th>
-        <th>@Html.DisplayNameFor(model => model.treatmentArea)</th>
-        <th>@Html.DisplayNameFor(model => model.GeoCodes.description)</th>
-        <th>@Html.DisplayNameFor(model => model.ModificationHistory.description)</th>
+        <th>Patient Name</th>
+        <th>Geographical Unit</th>
+        <th>Patient Bed ID</th>
+        <th>Nurse Count</th>
+        <th>Doctor Count</th>
+        <th>Actions</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.name)</td>
-            <td>@Html.DisplayFor(modelItem => item.address)</td>
-            <td>@Html.DisplayFor(modelItem => item.dateOfBirth)</td>
-            <td>@Html.DisplayFor(modelItem => item.weight)</td>
-            <td>@Html.DisplayFor(modelItem => item.height)</td>
-            <td>@Html.DisplayFor(modelItem => item.bloodGroup)</td>
-            <td>@Html.DisplayFor(modelItem => item.bedID)</td>
-            <td>@Html.DisplayFor(modelItem => item.treatmentArea)</td>
-            <td>@Html.DisplayFor(modelItem => item.GeoCodes.description)</td>
-            <td>@Html.DisplayFor(modelItem => item.ModificationHistory.description)</td>
+            <td>@Html.DisplayFor(modelItem => item.Patient.name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Patient.GeoCodes.description)</td>
+            <td>@Html.DisplayFor(modelItem => item.Patient.bedID)</td>
+            <td>@Html.DisplayFor(modelItem => item.Patient.nurseCount)</td>
+            <td>@Html.DisplayFor(modelItem => item.Patient.doctorCount)</td>
+            <td>
+                @* Only show the button if IsAssignButtonVisible is true *@
+                @if (item.IsAssignButtonVisible)
+                {
+                    <button type="button" onclick="location.href='@Url.Action("Create", "AssignPatient", new { patientId = item.Patient.ID })'">
+                        Assign Patient
+                    </button>
+                }
+            </td>
         </tr>
     }
 </table>
+
+
 

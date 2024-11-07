@@ -4,7 +4,7 @@
     ViewBag.Title = "My iCARE Board";
 }
 
-<h2>@Session["Profession"] @Session["FirstName"]'s iCARE Board:</h2>
+<h2>@Session["FirstName"]'s Board:</h2>
 
 <p>
     <!-- @Html.ActionLink("Create New", "Create") -->
@@ -12,31 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            <label>Name</label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.address)
+            <label>Date of Birth</label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateOfBirth)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.weight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.height)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.bloodGroup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.bedID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.treatmentArea)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GeoCodes.description)
+            <label>Hospital Unit</label>
         </th>
         
         <th></th>
@@ -49,32 +31,14 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.address)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.dateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.height)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.bloodGroup)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.bedID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.treatmentArea)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GeoCodes.description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                <button type="button" onclick="location.href='@Url.Action("Details", "ManagePatient", new { id = item.ID})'">Patient Details</button>
+                <!--@Html.ActionLink("Details", "Details", new { id = item.ID })-->
             </td>
         </tr>
     }

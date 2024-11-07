@@ -4,14 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Patient: @Html.DisplayFor(model => model.name)</h2>
 
 <div>
-    <h4>PatientRecord</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.name)
+            <label>Name</label>
         </dt>
 
         <dd>
@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.address)
+            <label>Address</label>
         </dt>
 
         <dd>
@@ -27,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.dateOfBirth)
+            <label>Date of Birth</label>
         </dt>
 
         <dd>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.weight)
+            <label>Weight</label>
         </dt>
 
         <dd>
@@ -43,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.height)
+            <label>Height</label>
         </dt>
 
         <dd>
@@ -51,7 +51,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.bloodGroup)
+            <label>Blood Group</label>
         </dt>
 
         <dd>
@@ -59,7 +59,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.bedID)
+            <label>Bed ID</label>
         </dt>
 
         <dd>
@@ -67,7 +67,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.treatmentArea)
+            <label>Treatment Area</label>
         </dt>
 
         <dd>
@@ -75,7 +75,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DocumentMetadata.userID)
+            <label>Document ID</label>
         </dt>
 
         <dd>
@@ -83,7 +83,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.GeoCodes.description)
+            <label>Hospital Unit</label>
         </dt>
 
         <dd>
@@ -91,7 +91,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ModificationHistory.description)
+            <label>Description</label>
         </dt>
 
         <dd>
@@ -101,6 +101,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <button type="button" onclick="location.href='@Url.Action("Index", "DisplayMyBoard")'">Back</button>
 </p>

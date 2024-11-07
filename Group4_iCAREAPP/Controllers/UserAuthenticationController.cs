@@ -62,7 +62,7 @@ namespace Group4_iCAREAPP.Controllers
                 {
                     db.iCareUser.Add(iCareUser);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Login");
                 }
                 catch (DbUpdateException ex)
                 {

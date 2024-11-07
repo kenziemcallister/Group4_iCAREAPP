@@ -24,7 +24,7 @@ namespace Group4_iCAREAPP.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "About iCARE...";
             return View();
         }
 

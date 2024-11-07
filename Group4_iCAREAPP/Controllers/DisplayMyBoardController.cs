@@ -25,6 +25,7 @@ namespace Group4_iCAREAPP.Controllers
             // Store the user and worker information in the ViewBag for use in the layout
             ViewBag.CurrentUser = currentUser;
             ViewBag.CurrentWorker = currentWorker;
+            ViewBag.CurrentUserName = currentUser.name;
 
             // Query TreatmentRecord to find patients assigned to the logged-in iCareWorker
             var assignedPatients = db.TreatmentRecord

@@ -25,17 +25,64 @@ namespace Group4_iCAREAPP.Controllers
             // Populate Geographical Unit dropdown list
             ViewBag.GeographicalUnitList = new SelectList(db.GeoCodes, "ID", "description");
 
-            // Load all patients by default
+            // Load all patients and calculate visibility for Assign Patient button
             var patientRecords = db.PatientRecord.Include(p => p.GeoCodes)
                                                  .Include(p => p.DocumentMetadata)
-                                                 .Include(p => p.ModificationHistory).ToList();
+                                                 .Include(p => p.ModificationHistory)
+                                                 .ToList();
 
-            return View(patientRecords);
+            // Create a list of view models with button visibility based on conditions
+            var viewModel = patientRecords.Select(patient => new PatientViewModel
+            {
+                Patient = patient,
+                IsAssignButtonVisible = ShouldShowAssignButton(patient, currentWorker)
+            }).ToList();
+
+            return View(viewModel);
+        }
+
+        // Helper method to determine if Assign Patient button should be shown
+        private bool ShouldShowAssignButton(PatientRecord patient, iCareWorker currentWorker)
+        {
+            // Condition 1: Check if the patient has 3 nurses and 1 doctor (button hidden if true)
+            if (patient.nurseCount >= 3 && patient.doctorCount >= 1)
+                return false;
+
+            // Condition 2: If logged-in user is a nurse, show button if nurse count < 3
+            if (currentWorker.profession == "nurse" && patient.nurseCount < 3)
+                return true;
+
+            // Condition 3: If logged-in user is a doctor, show button if no doctor and at least 1 nurse
+            if (currentWorker.profession == "doctor" && patient.doctorCount == 0 && patient.nurseCount > 0)
+                return true;
+
+            return false;
+        }
+
+        // GET: iCAREBoard/Details/id
+        public ActionResult Details(string id) // adjust the type if PatientRecordID is not string
+        {
+            // Fetch the patient record by ID
+            var patientRecord = db.PatientRecord.Include(p => p.GeoCodes)
+                                                .Include(p => p.DocumentMetadata)
+                                                .Include(p => p.ModificationHistory)
+                                                .FirstOrDefault(p => p.ID == id);
+
+            if (patientRecord == null)
+            {
+                return HttpNotFound(); // Return a 404 if the record isn't found
+            }
+
+            return View(patientRecord); // Pass the patient record to the Details view
         }
 
         // Action for AJAX filtering by geographical unit
         public ActionResult FilterByGeographicalUnit(string geographicalUnit)
         {
+            var userId = User.Identity.Name;
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Fetch and filter patient records based on geographical unit
             var patientRecords = db.PatientRecord.Include(p => p.GeoCodes)
                                                  .Include(p => p.DocumentMetadata)
                                                  .Include(p => p.ModificationHistory);
@@ -45,8 +92,23 @@ namespace Group4_iCAREAPP.Controllers
                 patientRecords = patientRecords.Where(p => p.geographicalUnit == geographicalUnit);
             }
 
-            return PartialView("_PatientList", patientRecords.ToList());
+            // Create the filtered view model list
+            var viewModel = patientRecords.ToList().Select(patient => new PatientViewModel
+            {
+                Patient = patient,
+                IsAssignButtonVisible = ShouldShowAssignButton(patient, currentWorker)
+            }).ToList();
+
+            return PartialView("_PatientList", viewModel);
         }
     }
+
+    // View model to pass patient data and assign button visibility
+    public class PatientViewModel
+    {
+        public PatientRecord Patient { get; set; }
+        public bool IsAssignButtonVisible { get; set; }
+    }
 }
+
 

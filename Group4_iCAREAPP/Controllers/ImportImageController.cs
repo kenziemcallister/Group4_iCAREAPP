@@ -78,31 +78,24 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ImportImage/Create
         public ActionResult Create()
         {
-            // Fetch the logged-in user's data
-            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
-            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
-            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+            // Fetch the logged-in user's ID
+            var userId = User.Identity.Name;
 
-            // Store the user and worker information in the ViewBag for use in the layout
-            ViewBag.CurrentUser = currentUser;
-            ViewBag.CurrentWorker = currentWorker;
-
-
-            // Generate a unique 10-character ID
+            // Generate a unique 10-character ID for the document
             string docID = Guid.NewGuid().ToString("N").Substring(0, 5);
 
-            // Initialize DocumentMetadata with pre-set docID
+            // Initialize DocumentMetadata with pre-set docID and userID
             var documentMetadata = new DocumentMetadata
             {
-                docID = docID
+                docID = docID,
+                userID = userId // Set the userID to the logged-in user's ID
             };
 
-            var users = db.iCareUser.ToList();
-            ViewBag.userID = new SelectList(users, "ID", "ID");
             ViewBag.docType = new SelectList(new[] { "PATIENT", "TREATMENT", "UPLOADS" });
 
             return View(documentMetadata); // Pass initialized object to the view
         }
+
 
         // POST: ImportImage/Create
         [HttpPost]

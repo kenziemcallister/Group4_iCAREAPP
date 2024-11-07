@@ -90,25 +90,9 @@
             @Html.DisplayFor(model => model.GeoCodes.description)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.iCareWorker.profession)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.iCareWorker.profession)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModificationHistory.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModificationHistory.description)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <!--@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) | -->
+    <button type="button" onclick="location.href='@Url.Action("Index")'">Back</button>
 </p>

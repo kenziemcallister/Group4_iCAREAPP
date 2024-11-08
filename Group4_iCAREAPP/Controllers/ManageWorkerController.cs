@@ -14,7 +14,6 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
         // GET: ManageWorker
         public ActionResult Index()
         {
-            // Fetch the logged-in user's data
             var userId = User.Identity.Name; // Adjust this based on how you get the user ID
             var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
             var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
@@ -26,6 +25,17 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
 
             // Retrieve all workers along with their roles and geographical units
             var workers = db.iCareWorker.Include(w => w.UserRole).Include(w => w.GeoCodes).ToList();
+
+            foreach (var worker in workers)
+            {
+                // Fetch the user information for the current worker
+                var user = db.iCareUser.FirstOrDefault(u => u.ID == worker.ID);
+                if (user != null)
+                {
+                    worker.WorkerName = user.name;  // Assuming 'Name' is the column in iCareUser where the name is stored
+                }
+            }
+
             return View(workers);
         }
 

@@ -24,7 +24,9 @@ namespace Group4_iCAREAPP.Models
         public string docID { get; set; }
         public string userID { get; set; }
         public string docName { get; set; }
+        public string Author { get; set; }
         public Nullable<System.DateTime> dateOfCreation { get; set; }
+
         public string versions { get; set; }
         public string docType { get; set; }
 

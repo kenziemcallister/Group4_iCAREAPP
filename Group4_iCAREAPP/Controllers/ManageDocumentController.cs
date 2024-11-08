@@ -28,6 +28,21 @@ namespace Group4_iCAREAPP.Controllers
 
 
             var documentMetadata = db.DocumentMetadata.Include(d => d.iCareWorker).Include(d => d.ModificationHistory);
+
+            foreach (var document in documentMetadata)
+            {
+                if (document.dateOfCreation.HasValue)
+                {
+                    document.dateOfCreation = document.dateOfCreation.Value.Date; // Remove time portion
+                }
+
+                var creator = db.iCareUser.FirstOrDefault(u => u.ID == document.userID);
+                if (creator != null)
+                {
+                    document.Author = creator.name;
+                }
+            }
+
             return View(documentMetadata.ToList());
         }
 

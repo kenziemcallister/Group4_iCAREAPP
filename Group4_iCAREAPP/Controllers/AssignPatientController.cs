@@ -146,6 +146,85 @@ namespace Group4_iCAREAPP.Controllers
         }
 
 
+        public ActionResult CreateFromBoard(string id)
+        {
+            // Ensure the provided patient ID exists
+            var patient = db.PatientRecord.FirstOrDefault(p => p.ID == id);
+            if (patient == null)
+            {
+                return HttpNotFound("Patient not found.");
+            }
+
+            // Get the logged-in user's ID
+            var userId = User.Identity.Name;
+            ViewBag.workerID = userId;
+
+            // Pass the patient ID directly to the view
+            ViewBag.patientIDBoard = id;
+
+            // Pass drugs list if needed
+            ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
+
+            return View("CreateFromBoard"); // Reuse the existing Create view
+        }
+
+
+        // POST: AssignPatient/CreateFromBoard
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFromBoard([Bind(Include = "treatmentID,description,treatmentDate,patientID,workerID,drugID,docID")] TreatmentRecord treatmentRecord)
+        {
+            if (ModelState.IsValid)
+            {
+                // Generate metadata docID
+                string docID = Guid.NewGuid().ToString("N").Substring(0, 5);
+
+                // Create and add DocumentMetadata
+                var metadata = new DocumentMetadata
+                {
+                    docID = docID,
+                    userID = User.Identity.Name,
+                    docType = "TREATMENT",
+                    dateOfCreation = DateTime.Now
+                };
+                db.DocumentMetadata.Add(metadata);
+
+                // Assign treatment record details
+                treatmentRecord.docID = docID;
+                treatmentRecord.treatmentID = docID;
+                treatmentRecord.workerID = User.Identity.Name;
+
+                // Check patient and worker limits
+                var worker = db.iCareWorker.FirstOrDefault(w => w.ID == treatmentRecord.workerID);
+                var patientRecord = db.PatientRecord.FirstOrDefault(p => p.ID == treatmentRecord.patientID);
+                if (worker == null || patientRecord == null)
+                {
+                    return Json(new { success = false, message = "Worker or Patient not found." });
+                }
+
+                string workerProfession = worker.profession;
+                if ((workerProfession == "doctor" && (patientRecord.doctorCount ?? 0) >= 1) ||
+                    (workerProfession == "nurse" && (patientRecord.nurseCount ?? 0) >= 3) ||
+                    (workerProfession == "doctor" && (patientRecord.nurseCount ?? 0) == 0))
+                {
+                    return Json(new { success = false, message = "Patient has reached worker limits or requires a nurse first." });
+                }
+
+                // Update patient counts
+                if (workerProfession == "doctor") patientRecord.doctorCount += 1;
+                else if (workerProfession == "nurse") patientRecord.nurseCount += 1;
+
+                // Save treatment record
+                db.TreatmentRecord.Add(treatmentRecord);
+                db.SaveChanges();
+
+                return Json(new { success = true, message = "Treatment record created successfully." });
+            }
+
+            return Json(new { success = false, message = "Invalid form data. Please correct and try again." });
+        }
+
+
         // EDIT                 GET: AssignPatient/Edit/5
         public ActionResult Edit(string id)
         {

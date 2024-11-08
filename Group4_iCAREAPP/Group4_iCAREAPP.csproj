@@ -323,6 +323,7 @@
     <Content Include="Views\ManageTreatment\Index.cshtml" />
     <Content Include="Views\DisplayPalette\ChooseDoc.cshtml" />
     <Content Include="Views\ManageWorker\Profile.cshtml" />
+    <Content Include="Views\AssignPatient\CreateFromBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

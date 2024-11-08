@@ -1,0 +1,113 @@
+﻿@model Group4_iCAREAPP.Models.TreatmentRecord
+
+@{
+    ViewBag.Title = "Create Treatment Record from Board";
+}
+
+<h2>Create Treatment Record for Patient</h2>
+
+@using (Html.BeginForm("CreateFromBoard", "AssignPatient", FormMethod.Post, new { id = "createFromBoardForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h4>TreatmentRecord</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div id="responseMessage" class="text-success"></div> <!-- Area for success/error messages -->
+
+<div class="form-horizontal">
+    <hr />
+
+    <!-- WORKER -->
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Worker *
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" value="@ViewBag.workerID" readonly />
+            @Html.HiddenFor(model => model.workerID)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Patient ID *
+        </label>
+        <div class="col-md-10">
+            <!-- Display patient ID as read-only text -->
+            <input type="text" class="form-control" value="@ViewBag.patientIDBoard" readonly />
+            <!-- Hidden field for patientID -->
+            @Html.HiddenFor(model => model.patientID, new { Value = ViewBag.patientIDBoard })
+        </div>
+    </div>
+
+
+    <!-- TREATMENT DATE -->
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Treatment Date *
+        </label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.treatmentDate, new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Description
+        </label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- PRESCRIBED DRUGS -->
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Prescribed Drugs
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("drugID", (SelectList)ViewBag.DrugsList, "Select Prescribed Drugs", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.drugID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
+            <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    <script>
+        // AJAX Submission
+        $("#createFromBoardForm").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: $(this).attr("action"),
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data.success) {
+                        $("#responseMessage").html(data.message).css("color", "green");
+                        $("#createFromBoardForm")[0].reset();
+                        $("#drugID").val("");
+                    } else {
+                        $("#responseMessage").html(data.message).css("color", "red");
+                    }
+                },
+                error: function () {
+                    $("#responseMessage").html("An error occurred while processing your request.").css("color", "red");
+                }
+            });
+        });
+    </script>
+}

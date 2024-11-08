@@ -48,16 +48,18 @@ namespace Group4_iCAREAPP.Controllers
         // Helper method to determine if Assign Patient button should be shown
         private bool ShouldShowAssignButton(PatientRecord patient, iCareWorker currentWorker)
         {
+            var userId = User.Identity.Name;
+            ViewBag.workerID = userId;
             // Condition 1: Check if the patient has 3 nurses and 1 doctor (button hidden if true)
-            if (patient.nurseCount >= 3 && patient.doctorCount >= 1)
+            if (patient.nurseCount >= 3 && patient.doctorCount >= 1 && !db.TreatmentRecord.Any(tr => tr.patientID == patient.ID && tr.workerID == userId))
                 return false;
 
             // Condition 2: If logged-in user is a nurse, show button if nurse count < 3
-            if (currentWorker.profession == "nurse" && patient.nurseCount < 3)
+            if (currentWorker.profession == "nurse" && patient.nurseCount < 3 && !db.TreatmentRecord.Any(tr => tr.patientID == patient.ID && tr.workerID == userId))
                 return true;
 
             // Condition 3: If logged-in user is a doctor, show button if no doctor and at least 1 nurse
-            if (currentWorker.profession == "doctor" && patient.doctorCount == 0 && patient.nurseCount > 0)
+            if (currentWorker.profession == "doctor" && patient.doctorCount == 0 && patient.nurseCount > 0 && !db.TreatmentRecord.Any(tr => tr.patientID == patient.ID && tr.workerID == userId))
                 return true;
 
             return false;

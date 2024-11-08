@@ -6,100 +6,107 @@
 
 <h2>Patient: @Html.DisplayFor(model => model.name)</h2>
 
-<div>
+<div class="container">
 
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            <label>Name</label>
-        </dt>
+    <div class="doc-content">
 
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
+        <dl class="dl-horizontal">
+            <dt>
+                <label>Name</label>
+            </dt>
 
-        <dt>
-            <label>Address</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.address)
-        </dd>
+            <dt>
+                <label>Address</label>
+            </dt>
 
-        <dt>
-            <label>Date of Birth</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.address)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.dateOfBirth)
-        </dd>
+            <dt>
+                <label>Date of Birth</label>
+            </dt>
 
-        <dt>
-            <label>Weight</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.dateOfBirth)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.weight)
-        </dd>
+            <dt>
+                <label>Weight</label>
+            </dt>
 
-        <dt>
-            <label>Height</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.weight)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.height)
-        </dd>
+            <dt>
+                <label>Height</label>
+            </dt>
 
-        <dt>
-            <label>Blood Group</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.height)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.bloodGroup)
-        </dd>
+            <dt>
+                <label>Blood Group</label>
+            </dt>
 
-        <dt>
-            <label>Bed ID</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.bloodGroup)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.bedID)
-        </dd>
+            <dt>
+                <label>Bed ID</label>
+            </dt>
 
-        <dt>
-            <label>Treatment Area</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.bedID)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.treatmentArea)
-        </dd>
+            <dt>
+                <label>Treatment Area</label>
+            </dt>
 
-        <dt>
-            <label>Document ID</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.treatmentArea)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DocumentMetadata.userID)
-        </dd>
+            <dt>
+                <label>Hospital Unit</label>
+            </dt>
 
-        <dt>
-            <label>Hospital Unit</label>
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.GeoCodes.description)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.GeoCodes.description)
-        </dd>
+            <dt>
+                <label>Description</label>
+            </dt>
 
-        <dt>
-            <label>Description</label>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModificationHistory.description)
-        </dd>
-
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.ModificationHistory.description)
+            </dd>
+        </dl>
+    </div>
 </div>
+
+<br />
+@* Metadata section *@
+<div class="metadata" style="text-align:right">
+    <p>
+        Date created: <span>@Html.DisplayFor(model => model.DocumentMetadata.dateOfCreation)</span>
+    </p>
+    <p>
+        Created by: <span>@Html.DisplayFor(model => model.DocumentMetadata.userID)</span>
+    </p>
+</div>
+
+<hr />
 <p>
-    <button type="button" onclick="location.href='@Url.Action("Index", "DisplayMyBoard")'">Back</button>
+    <button type="button" onclick="location.href='@Url.Action("DocList", "DisplayPalette")'">Back to Documents</button>
 </p>

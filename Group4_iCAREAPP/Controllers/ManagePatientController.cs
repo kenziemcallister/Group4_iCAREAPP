@@ -128,17 +128,34 @@ namespace Group4_iCAREAPP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,treatedBy,docID,modifierID")] PatientRecord patientRecord)
+        public ActionResult Edit([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit")] PatientRecord patientRecord)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(patientRecord).State = EntityState.Modified;
+                var originalPatientRecord = db.PatientRecord.FirstOrDefault(pr => pr.ID == patientRecord.ID);
+                
+                // save unmodifiable values:
+                patientRecord.docID = originalPatientRecord.docID;
+                patientRecord.nurseCount = originalPatientRecord.nurseCount;
+                patientRecord.doctorCount = originalPatientRecord.doctorCount;
+
+                db.Entry(originalPatientRecord).State = EntityState.Modified;
+
+                // save new changes:
+                originalPatientRecord.name = patientRecord.name;
+                originalPatientRecord.address = patientRecord.address;
+                originalPatientRecord.dateOfBirth = patientRecord.dateOfBirth;
+                originalPatientRecord.weight = patientRecord.weight;
+                originalPatientRecord.height = patientRecord.height;
+                originalPatientRecord.bloodGroup = patientRecord.bloodGroup;
+                originalPatientRecord.bedID = patientRecord.bedID;
+                originalPatientRecord.treatmentArea = patientRecord.treatmentArea;
+                originalPatientRecord.geographicalUnit = patientRecord.geographicalUnit;
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("DocList", "DisplayPalette");
             }
-            ViewBag.docID = new SelectList(db.DocumentMetadata, "docID", "userID", patientRecord.docID);
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description", patientRecord.geographicalUnit);
-            ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description", patientRecord.modifierID);
             return View(patientRecord);
         }
 

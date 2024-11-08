@@ -27,14 +27,14 @@ namespace Group4_iCAREAPP.Controllers
             ViewBag.CurrentWorker = currentWorker;
             ViewBag.CurrentUserName = currentUser.name;
 
-            // Query TreatmentRecord to find patients assigned to the logged-in iCareWorker
+            // find patients assigned to iCareWorkers
             var assignedPatients = db.TreatmentRecord
                 .Where(tr => tr.workerID == userId) 
                 .Select(tr => tr.PatientRecord) 
                 .Distinct()
-                .Include(pr => pr.DocumentMetadata) // Ensure this navigation property exists
-                .Include(pr => pr.GeoCodes) // Ensure this navigation property exists
-                .Include(pr => pr.ModificationHistory) // Ensure this navigation property exists
+                .Include(pr => pr.DocumentMetadata) 
+                .Include(pr => pr.GeoCodes) 
+                .Include(pr => pr.ModificationHistory) 
                 .ToList();
 
             return View(assignedPatients);

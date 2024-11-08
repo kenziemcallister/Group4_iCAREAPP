@@ -34,16 +34,6 @@ namespace Group4_iCAREAPP.Controllers
         // GET: DisplayPalette/DocList/5
         public ActionResult DocList(string id)
         {
-            /*if (id == null)
-             {
-                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-             }
-             DocumentMetadata documentMetadata = db.DocumentMetadata.Find(id);
-             if (documentMetadata == null)
-             {
-                 return HttpNotFound();
-             }
-             return View(documentMetadata); */
             // Fetch the logged-in user's data
             var userId = User.Identity.Name; // Adjust this based on how you get the user ID
             var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);

@@ -22,12 +22,11 @@ namespace Group4_iCAREAPP.Controllers
         // INDEX                GET: AssignPatient
         public ActionResult Index()
         {
-            // fetch logged-in user's data
-            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var userId = User.Identity.Name;
             var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
             var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
 
-            // Store the user and worker information in the ViewBag for use in the layout
+            // user and worker information
             ViewBag.CurrentUser = currentUser;
             ViewBag.CurrentWorker = currentWorker;
 
@@ -68,11 +67,9 @@ namespace Group4_iCAREAPP.Controllers
             var userId = User.Identity.Name;
             ViewBag.workerID = userId;
 
-            // Fetch the logged-in user's data
             var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
             var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
 
-            // Store the user and worker information in the ViewBag for use in the layout
             ViewBag.CurrentUser = currentUser;
             ViewBag.CurrentWorker = currentWorker;
 
@@ -149,7 +146,6 @@ namespace Group4_iCAREAPP.Controllers
                 return Json(new { success = true, message = "Treatment record created and worker assigned successfully." });
             }
 
-            // If the model state is invalid, return JSON error
             return Json(new { success = false, message = "Invalid form data. Please correct and try again." });
         }
 
@@ -157,25 +153,19 @@ namespace Group4_iCAREAPP.Controllers
         public ActionResult CreateFromBoard(string id)
         {
 
-            // Get the logged-in user's ID
             var userId = User.Identity.Name;
             ViewBag.workerID = userId;
 
-            // Ensure the provided patient ID exists
             var patient = db.PatientRecord.FirstOrDefault(p => p.ID == id);
             if (patient == null)
             {
                 return HttpNotFound("Patient not found.");
             }
-
             
-            // Pass the patient ID directly to the view
             ViewBag.patientIDBoard = id;
-
-            // Pass drugs list if needed
             ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
 
-            return View("CreateFromBoard"); // Reuse the existing Create view
+            return View("CreateFromBoard");
         }
 
 
@@ -186,12 +176,18 @@ namespace Group4_iCAREAPP.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Generate metadata docID
+                // generate a docIC
                 string docID = Guid.NewGuid().ToString("N").Substring(0, 5);
 
-                // Create and add DocumentMetadata
+                var patientRecord = db.PatientRecord.FirstOrDefault(p => p.ID == treatmentRecord.patientID);
+
+                // auto set the name of the document to be the patient's name:
+                string docName = "Treatment: " + patientRecord.name;
+
+                // create a doc
                 var metadata = new DocumentMetadata
                 {
+                    docName=docName,
                     docID = docID,
                     userID = User.Identity.Name,
                     docType = "TREATMENT",
@@ -199,19 +195,20 @@ namespace Group4_iCAREAPP.Controllers
                 };
                 db.DocumentMetadata.Add(metadata);
 
-                // Assign treatment record details
+                // assign treatment record info
                 treatmentRecord.docID = docID;
                 treatmentRecord.treatmentID = docID;
                 treatmentRecord.workerID = User.Identity.Name;
 
-                // Check patient and worker limits
+                // check for workers and patients
                 var worker = db.iCareWorker.FirstOrDefault(w => w.ID == treatmentRecord.workerID);
-                var patientRecord = db.PatientRecord.FirstOrDefault(p => p.ID == treatmentRecord.patientID);
+                //var patientRecord = db.PatientRecord.FirstOrDefault(p => p.ID == treatmentRecord.patientID);
                 if (worker == null || patientRecord == null)
                 {
                     return Json(new { success = false, message = "Worker or Patient not found." });
                 }
 
+                // check if the worker / patients can be assigned
                 string workerProfession = worker.profession;
                 if ((workerProfession == "doctor" && (patientRecord.doctorCount ?? 0) >= 1) ||
                     (workerProfession == "nurse" && (patientRecord.nurseCount ?? 0) >= 3) ||
@@ -220,11 +217,10 @@ namespace Group4_iCAREAPP.Controllers
                     return Json(new { success = false, message = "Patient has reached worker limits or requires a nurse first." });
                 }
 
-                // Update patient counts
+                // add to patient counts
                 if (workerProfession == "doctor") patientRecord.doctorCount += 1;
                 else if (workerProfession == "nurse") patientRecord.nurseCount += 1;
 
-                // Save treatment record
                 db.TreatmentRecord.Add(treatmentRecord);
                 db.SaveChanges();
 

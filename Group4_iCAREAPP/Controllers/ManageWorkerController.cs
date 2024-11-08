@@ -57,6 +57,10 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
 
             var user = db.iCareUser.FirstOrDefault(u => u.ID == userID); // Fetch user from iCareUser table
 
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = user;
+            ViewBag.CurrentWorker = worker;
+
             if (worker == null || user == null)
             {
                 return HttpNotFound("User or Worker not found");

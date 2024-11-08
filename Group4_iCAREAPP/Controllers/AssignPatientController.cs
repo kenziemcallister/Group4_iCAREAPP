@@ -47,6 +47,15 @@ namespace Group4_iCAREAPP.Controllers
         // DETAILS              GET: AssignPatient/Details/5
         public ActionResult Details(string id)
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -234,6 +243,15 @@ namespace Group4_iCAREAPP.Controllers
         // EDIT                 GET: AssignPatient/Edit/5
         public ActionResult Edit(string id)
         {
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -244,23 +262,35 @@ namespace Group4_iCAREAPP.Controllers
                 return HttpNotFound();
             }
             ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID", treatmentRecord.workerID);
-            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
+            ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
+
             return View(treatmentRecord);
         }
 
         // POST EDIT            POST: AssignPatient/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "treatmentID,description,treatmentDate,patientID,workerID")] TreatmentRecord treatmentRecord)
+        public ActionResult Edit([Bind(Include = "treatmentID,treatmentDate,description,patientID,workerID,drugID,docID")] TreatmentRecord treatmentRecord)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(treatmentRecord).State = EntityState.Modified;
+                var originalTreatmentRecord = db.TreatmentRecord.FirstOrDefault(tr => tr.treatmentID == treatmentRecord.treatmentID);
+                
+                // save unmodifiable values:
+                treatmentRecord.treatmentID = originalTreatmentRecord.treatmentID;
+                treatmentRecord.patientID = originalTreatmentRecord.patientID;
+                treatmentRecord.workerID = originalTreatmentRecord.workerID;
+                treatmentRecord.docID = originalTreatmentRecord.docID;
+
+                // save new changes:
+                originalTreatmentRecord.description = treatmentRecord.description;
+                originalTreatmentRecord.treatmentDate = treatmentRecord.treatmentDate;
+                originalTreatmentRecord.drugID = treatmentRecord.drugID;
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("DocList", "DisplayPalette");
             }
-            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID", treatmentRecord.workerID);
-            ViewBag.patientID = new SelectList(db.PatientRecord, "ID", "name", treatmentRecord.patientID);
+            ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
             return View(treatmentRecord);
         }
 

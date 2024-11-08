@@ -55,6 +55,15 @@ namespace Group4_iCAREAPP.Controllers
         // GET : Details
         public ActionResult Details(string id)
         {
+            // Fetch the logged-in user's ID
+            var userId = User.Identity.Name;
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // user and worker information
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -77,9 +86,15 @@ namespace Group4_iCAREAPP.Controllers
 
         // GET: ImportImage/Create
         public ActionResult Create()
-        {
+        {           
             // Fetch the logged-in user's ID
             var userId = User.Identity.Name;
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // user and worker information
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
 
             // Generate a unique 10-character ID for the document
             string docID = Guid.NewGuid().ToString("N").Substring(0, 5);
@@ -160,6 +175,15 @@ namespace Group4_iCAREAPP.Controllers
         // GET: ImportImage/Edit/5
         public ActionResult Edit(string id)
         {
+            // Fetch the logged-in user's ID
+            var userId = User.Identity.Name;
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // user and worker information
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

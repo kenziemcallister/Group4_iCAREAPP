@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>DocumentMetadata</h4>
         <hr />
@@ -57,9 +57,10 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<p>
+    <button type="button" onclick="location.href='@Url.Action("DocList", "DisplayPalette")'">Back</button>
+</p>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -108,11 +108,16 @@
         <div class="col-md-offset-2 col-md-10">
             <h2></h2>
             <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
-            <button type="button" onclick="location.href='@Url.Action("ChooseDoc", "DisplayPalette")'">Back</button>
         </div>
     </div>
 </div>
     }
+
+<br />
+<p>
+    <button type="button" onclick="location.href='@Url.Action("ChooseDoc", "DisplayPalette")'">Back</button>
+
+</p>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

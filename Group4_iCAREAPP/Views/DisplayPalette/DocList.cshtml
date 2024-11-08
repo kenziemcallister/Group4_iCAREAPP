@@ -1,8 +1,7 @@
-﻿<!-- @Model Group4_iCAREAPP.Models.DocumentMetadata -->
-@model IEnumerable<Group4_iCAREAPP.Models.DocumentMetadata>
+﻿@model IEnumerable<Group4_iCAREAPP.Models.DocumentMetadata>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "DocList";
 }
 
 <h2>Document List</h2>
@@ -50,6 +49,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.docType)
+            </td>
+            <td>
+                <button type="button" onclick="location.href='@Url.Action("RedirectViewDetails", "DisplayPalette", new { docID = item.docID })'">View Details</button>
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |

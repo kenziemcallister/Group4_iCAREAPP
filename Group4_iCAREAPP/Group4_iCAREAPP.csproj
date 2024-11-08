@@ -281,7 +281,7 @@
     <Content Include="Views\iCAREBoard\Edit.cshtml" />
     <Content Include="Views\iCAREBoard\Index.cshtml" />
     <Content Include="Views\DisplayPalette\Create.cshtml" />
-    <Content Include="Views\DisplayPalette\Details.cshtml" />
+    <Content Include="Views\DisplayPalette\DocList.cshtml" />
     <Content Include="Views\DisplayPalette\Edit.cshtml" />
     <Content Include="Views\DisplayPalette\Index.cshtml" />
     <Content Include="Views\DisplayMyBoard\Create.cshtml" />

@@ -7,8 +7,8 @@
 <h2>Which type of document would you like to create?</h2>
 
 <div>
-    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "PATIENT" })'">Patient Record</button>
-    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "TREATMENT" })'">Treatment Record</button>
+    <button type="button" onclick="window.location.href='@Url.Action("Create", "ManagePatient")'">Patient Record</button>
+    @* @<button type="button" onclick="window.location.href='@Url.Action("Create", "ManageDocument", new { docType = "TREATMENT" })'">Treatment Record</button> *@
     <button type="button" onclick="window.location.href='@Url.Action("Create", "ImportImage")'">Import an Image</button>
 
 

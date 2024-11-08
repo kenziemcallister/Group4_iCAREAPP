@@ -24,13 +24,14 @@ namespace Group4_iCAREAPP.Controllers
         }
 
         // GET: ManagePatient/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string ID)
         {
-            if (id == null)
+            if (ID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PatientRecord patientRecord = db.PatientRecord.Find(id);
+            PatientRecord patientRecord = db.PatientRecord.Find(ID);
+
             if (patientRecord == null)
             {
                 return HttpNotFound();
@@ -39,7 +40,7 @@ namespace Group4_iCAREAPP.Controllers
         }
 
         // GET: ManagePatient/Create
-        public ActionResult Create(string docID)
+        public ActionResult Create()
         {
             // Fetch the logged-in user's data
             var userId = User.Identity.Name; // Adjust this based on how you get the user ID
@@ -50,21 +51,10 @@ namespace Group4_iCAREAPP.Controllers
             ViewBag.CurrentUser = currentUser;
             ViewBag.CurrentWorker = currentWorker;
 
-
-            DocumentMetadata documentMetadata = db.DocumentMetadata.Find(docID);
-            if (documentMetadata == null)
-            {
-                // add temporary error message:
-                TempData["ErrorMessage"] = "The document could not be found.";
-                return RedirectToAction("Create", "ManageDocument");
-            }
-
-
             ViewBag.UserID = new SelectList(db.iCareWorker, "ID", "ID"); // Dropdown for existing iCareWorkers
             ViewBag.geographicalUnit = new SelectList(db.GeoCodes, "ID", "description");
             ViewBag.modifierID = new SelectList(db.ModificationHistory, "ID", "description");
 
-            ViewBag.DocID = docID;
             return View();
         }
 
@@ -73,24 +63,40 @@ namespace Group4_iCAREAPP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,treatedBy,docID,modifierID")] PatientRecord patientRecord)
-        { 
+        public ActionResult Create([Bind(Include = "ID,name,address,dateOfBirth,weight,height,bloodGroup,bedID,treatmentArea,geographicalUnit,docID,doctorCount,nurseCount,modifierID")] PatientRecord patientRecord)
+        {
             if (ModelState.IsValid)
             {
-                try 
-                {
-                    db.PatientRecord.Add(patientRecord);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (DbUpdateException ex)
-                {
-                    if (ex.InnerException?.InnerException is SqlException sqlEx && sqlEx.Number == 2627)
-                    {
-                        ModelState.AddModelError("ID", "The Patient ID is taken.");
-                    }
-                }
+                // generate metadata docID with a new, unique ID
+                string docID = Guid.NewGuid().ToString("N").Substring(0, 5);
 
+                // auto set the name of the document to be the patient's name:
+                string docName = "Patient: " + patientRecord.name;
+
+                // fill out required metadata info
+                var metadata = new DocumentMetadata
+                {
+                    docID = docID,
+                    userID = User.Identity.Name,
+                    docName = docName,
+                    dateOfCreation = DateTime.Now,   // auto fills out automatically
+                    versions = 1.ToString(),
+                    docType = "PATIENT"
+                };
+
+                // create metadata entry in db
+                db.DocumentMetadata.Add(metadata);
+
+                // assign variables in the patient record
+                patientRecord.docID = docID;
+                patientRecord.ID = docID;
+                patientRecord.doctorCount = 0;
+                patientRecord.nurseCount = 0;
+                db.PatientRecord.Add(patientRecord);
+                db.SaveChanges();
+
+                TempData["SuccessMessage"] = $"Patient record for {patientRecord.name} created and worker assigned successfully.";
+                return RedirectToAction("Index", "iCareBoard");
             }
 
             ViewBag.DocID = patientRecord.docID;

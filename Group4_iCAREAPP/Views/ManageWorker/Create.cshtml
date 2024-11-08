@@ -54,6 +54,17 @@
             @Html.ValidationMessageFor(model => model.userPermission, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Hospital Unit *
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("geographicalUnit", ViewBag.GeographicalUnit as SelectList, "Select GeoCode", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.geographicalUnit, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     <h2></h2>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

@@ -17,79 +17,78 @@
 
     <div id="responseMessage" class="text-success"></div> <!-- Area for success/error messages -->
 
+    <div class="form-horizontal">
+        <hr />
 
-<div class="form-horizontal">
-    <hr />
+        <!-- WORKER -->
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Worker *
+            </label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" value="@ViewBag.workerID" readonly />
+                @Html.HiddenFor(model => model.workerID)
+                @*
+                    @Html.DropDownList("workerID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.workerID, "", new { @class = "text-danger" })
+                *@
+            </div>
+        </div>
 
-    <!-- WORKER -->
-    <div class="form-group">
-        <label class="control-label col-md-2">
-            Worker *
-        </label>
-        <div class="col-md-10">
-            <input type="text" class="form-control" value="@ViewBag.workerID" readonly />
-            @Html.HiddenFor(model => model.workerID)
-            @*
-                @Html.DropDownList("workerID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.workerID, "", new { @class = "text-danger" })
-            *@
+        <!-- PATIENT -->
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Patient *
+            </label>
+            <div class="col-md-10">
+                @Html.DropDownList("patientID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.patientID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- TREATMENT DATE -->
+        <div class="form-group">
+            <label class="control-label col-md-10">
+                Treatment Date *
+            </label>
+            <div class="col-md-10">
+                <!-- makes a date field for the user to fill in -->
+                @Html.TextBoxFor(model => model.treatmentDate, new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Description
+            </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- PRESCRIBED DRUGS -->
+        <div class="form-group">
+            <label class="control-label col-md-10">
+                Prescribed Drugs
+            </label>
+            <div class="col-md-10">
+                @Html.DropDownList("drugID", (SelectList)ViewBag.DrugsList, "Select Prescribed Drugs", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.drugID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <h2></h2>
+                <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
+                <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
+            </div>
         </div>
     </div>
-
-    <!-- PATIENT -->
-    <div class="form-group">
-        <label class="control-label col-md-2">
-            Patient *
-        </label>
-        <div class="col-md-10">
-            @Html.DropDownList("patientID", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.patientID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- TREATMENT DATE -->
-    <div class="form-group">
-        <label class="control-label col-md-10">
-            Treatment Date *
-        </label>
-        <div class="col-md-10">
-            <!-- makes a date field for the user to fill in -->
-            @Html.TextBoxFor(model => model.treatmentDate, new { @class = "form-control", type = "date" })
-            @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- DESCRIPTION -->
-    <div class="form-group">
-        <label class="control-label col-md-2">
-            Description
-        </label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- PRESCRIBED DRUGS -->
-    <div class="form-group">
-        <label class="control-label col-md-10">
-            Prescribed Drugs
-        </label>
-        <div class="col-md-10">
-            @Html.DropDownList("drugID", (SelectList)ViewBag.DrugsList, "Select Prescribed Drugs", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.drugID, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <h2></h2>
-            <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
-            <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
-        </div>
-    </div>
-</div>
 }
 
 

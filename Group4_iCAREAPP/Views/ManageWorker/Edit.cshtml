@@ -25,7 +25,7 @@
 
     <div class="form-group">
         <label class="control-label col-md-2">
-            Profession
+            Profession *
         </label>
         <div class="col-md-10">
             @Html.DropDownList("profession", ViewBag.Profession as SelectList, "Select Profession", new { @class = "form-control" })
@@ -35,7 +35,7 @@
 
     <div class="form-group">
         <label class="control-label col-md-2">
-            User Permission
+            User Permission *
         </label>
         <div class="col-md-10">
             @Html.DropDownList("userPermission", ViewBag.UserPermission as SelectList, "Select User Permission", new { @class = "form-control" })
@@ -45,7 +45,7 @@
 
     <div class="form-group">
         <label class="control-label col-md-2">
-            Geographical Unit
+            Hospital Unit *
         </label>
         <div class="col-md-10">
             @Html.DropDownList("geographicalUnit", ViewBag.GeoCodes as SelectList, "Select GeoCode", new { @class = "form-control" })

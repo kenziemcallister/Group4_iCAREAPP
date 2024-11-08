@@ -111,7 +111,7 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
             ViewBag.GeographicalUnit = new SelectList(db.GeoCodes, "ID", "description"); // Dropdown for geographical units
 
             // Hardcoded list for profession
-            ViewBag.Profession = new SelectList(new[] { "Doctor", "Nurse" });
+            ViewBag.Profession = new SelectList(new[] { "doctor", "nurse" });
 
             return View();
         }
@@ -147,7 +147,7 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
 
             // Prepare dropdown lists
             ViewBag.UserPermission = new SelectList(db.UserRole, "roleID", "roleName", worker.userPermission);
-            ViewBag.Profession = new SelectList(new[] { "Doctor", "Nurse" }, worker.profession);
+            ViewBag.Profession = new SelectList(new[] { "doctor", "nurse" }, worker.profession);
             ViewBag.GeoCodes = new SelectList(db.GeoCodes, "ID", "description", worker.geographicalUnit); // Dropdown for GeoCodes
 
             return View(worker);
@@ -170,7 +170,7 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
 
             // Prepare dropdown lists in case of validation errors
             ViewBag.UserPermission = new SelectList(db.UserRole, "roleID", "roleName", worker.userPermission);
-            ViewBag.Profession = new SelectList(new[] { "Doctor", "Nurse" }, worker.profession);
+            ViewBag.Profession = new SelectList(new[] { "doctor", "nurse" }, worker.profession);
             ViewBag.GeoCodes = new SelectList(db.GeoCodes, "ID", "description", worker.geographicalUnit);
 
             return View(worker);

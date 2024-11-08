@@ -13,13 +13,13 @@
 <table class="table">
     <tr>
         <th>
+            <label>Worker Name</label>
+        </th>
+        <th>
             <label>Profession</label>
         </th>
         <th>
-            <label>Worker ID</label>
-        </th>
-        <th>
-            <label>Worker Permission</label> 
+            <label>Worker Permission</label>
         </th>
         <th></th>
     </tr>
@@ -28,13 +28,13 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.WorkerName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.profession)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.userPermission) 
+                @Html.DisplayFor(modelItem => item.userPermission)
             </td>
             <td>
                 <!--@Html.ActionLink("Edit", "Edit", new { id = item.ID }) | -->

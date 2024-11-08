@@ -13,21 +13,17 @@
             <label>Document Name</label>
         </th>
         <th>
+            <label>Author</label>
+        </th>
+        <th>
             <label>Date of Creation</label>
         </th>
         <th>
             <label>Version</label>
         </th>
         <th>
-            <label>Profession</label>
+            <label>Document Type</label>
         </th>
-        <th>
-            <label>Description</label>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.docType)
-        </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -37,23 +33,20 @@
                 @Html.DisplayFor(modelItem => item.docName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.dateOfCreation)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.versions)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.iCareWorker.profession)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModificationHistory.description)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.docType)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |
-                @Html.ActionLink("Details", "Details", "ImportImage", new { id = item.docID }, null)
+                <button onclick="window.location='@Url.Action("Edit", new { id = item.docID })'">Modify</button> |
+                <button onclick="window.location='@Url.Action("Details", "ImportImage", new { id = item.docID })'">View Document</button>
             </td>
         </tr>
     }

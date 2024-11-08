@@ -134,7 +134,7 @@ namespace Group4_iCAREAPP.Controllers
                 db.DocumentMetadata.Add(documentMetadata);
                 db.SaveChanges();
 
-                return RedirectToAction("Details", "DisplayPalette");
+                return RedirectToAction("DocList", "DisplayPalette");
             }
 
             ViewBag.userID = new SelectList(db.iCareWorker, "ID", "ID", documentMetadata.userID);

@@ -58,21 +58,21 @@ namespace Group4_iCAREAPP.Controllers
 
             // Get document metadata using docID
             var documentMetadata = db.DocumentMetadata.FirstOrDefault(d => d.docID == docID);
-
             if (documentMetadata == null)
             {
                 return HttpNotFound();
             }
 
-
-            // Check the docType and redirect accordingly
+            // Check the docType, find the corresponding record, and redirect accordingly
             if (documentMetadata.docType == "PATIENT")
             {
-                return RedirectToAction("Details", "ManagePatient", new { id = docID });
+                var patientRecord = db.PatientRecord.FirstOrDefault(pr => pr.docID == docID);
+                return RedirectToAction("Details", "ManagePatient", new { id = patientRecord.ID });
             }
             else if (documentMetadata.docType == "TREATMENT")
             {
-                return RedirectToAction("Details", "AssignPatient", new { id = docID });
+                var treatmentRecord = db.TreatmentRecord.FirstOrDefault(tr => tr.docID == docID);
+                return RedirectToAction("Details", "AssignPatient", new { id = treatmentRecord.treatmentID });
             }
             else if (documentMetadata.docType == "UPLOADS")
             {
@@ -81,6 +81,42 @@ namespace Group4_iCAREAPP.Controllers
             else
             {
                 return RedirectToAction("Details", "ManageDocument", new { id = docID });
+            }
+        }
+
+        // Custom action to redirect the "Modify" buttons to the correct type of document
+        public ActionResult RedirectModify(string docID)
+        {
+            if (string.IsNullOrEmpty(docID))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Get document metadata using docID
+            var documentMetadata = db.DocumentMetadata.FirstOrDefault(d => d.docID == docID);
+            if (documentMetadata == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Check the docType, find the corresponding record, and redirect accordingly
+            if (documentMetadata.docType == "PATIENT")
+            {
+                var patientRecord = db.PatientRecord.FirstOrDefault(pr => pr.docID == docID);
+                return RedirectToAction("Edit", "ManagePatient", new { id = patientRecord.ID });
+            }
+            else if (documentMetadata.docType == "TREATMENT")
+            {
+                var treatmentRecord = db.TreatmentRecord.FirstOrDefault(tr => tr.docID == docID);
+                return RedirectToAction("Edit", "AssignPatient", new { id = treatmentRecord.treatmentID });
+            }
+            else if (documentMetadata.docType == "UPLOADS")
+            {
+                return RedirectToAction("Edit", "ImportImage", new { id = docID });
+            }
+            else
+            {
+                return RedirectToAction("Edit", "ManageDocument", new { id = docID });
             }
 
         }

@@ -4,12 +4,14 @@
     ViewBag.Title = "DocList";
 }
 
-<h2>Document List</h2>
-
+<h1 style="text-align:center">Documents</h1>
+<hr />
+<br />
 <!-- Document Type Filter Dropdown -->
 <label for="docType">Filter by Document Type:</label>
 @Html.DropDownList("docType", (SelectList)ViewBag.DocTypeList, "Select All", new { @class = "form-control", id = "docTypeDropdown" })
 
+<br />
 <table class="table">
     <tr>
         <th>
@@ -43,10 +45,7 @@
             </td>
             <td>
                 <button type="button" onclick="location.href='@Url.Action("RedirectViewDetails", "DisplayPalette", new { docID = item.docID })'">View Details</button>
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.docID }) |
-                @Html.ActionLink("Details", "Details", "ImportImage", new { id = item.docID }, null)
+                <button type="button" onclick="location.href='@Url.Action("RedirectModify", "DisplayPalette", new { docID = item.docID })'">Modify Document</button>
             </td>
         </tr>
     }

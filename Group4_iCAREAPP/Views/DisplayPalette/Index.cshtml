@@ -4,13 +4,18 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Palette</h2>
+<head>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+</head>
 
-<p>
-    <button type="button" onclick="location.href='@Url.Action("ChooseDoc", "DisplayPalette")'">Create New Document</button> <!--Needs to lead to new page where you can choose type of document to be created-->
-    <button type="button" onclick="location.href='@Url.Action("DocList", "DisplayPalette")'">View Documents</button>
+<h1 style="text-align:center">Palette</h1>
+<hr />
+
+<p style="text-align:center">
+    <button type="button" style="margin:150px 45px; padding:3% 3%; font-size:20px" onclick="location.href='@Url.Action("ChooseDoc", "DisplayPalette")'">Create New Document</button> <!--Needs to lead to new page where you can choose type of document to be created-->
+    <button type="button" style="margin: 150px 45px; padding: 3% 3%; font-size: 20px" onclick="location.href='@Url.Action("DocList", "DisplayPalette")'">View Documents</button>
 </p>
-
+<br />
 <p>
-    <button type="button" onclick="location.href='@Url.Action("Index", "Home")'">Back</button>
+    <button type="button" style="padding:20px 20px" onclick="location.href='@Url.Action("Index", "Home")'">Back</button>
 </p>

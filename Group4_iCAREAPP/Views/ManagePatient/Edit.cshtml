@@ -87,15 +87,7 @@
                 @Html.DropDownList("geographicalUnit", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.geographicalUnit, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.treatedBy, "treatedBy", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("treatedBy", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.treatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        </div>        
 
         <div class="form-group">
             @Html.LabelFor(model => model.docID, "docID", htmlAttributes: new { @class = "control-label col-md-2" })

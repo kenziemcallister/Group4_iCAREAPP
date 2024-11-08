@@ -31,8 +31,8 @@ namespace Group4_iCAREAPP.Controllers
             return View(documentMetadata.ToList());
         }
 
-        // GET: DisplayPalette/Details/5
-        public ActionResult Details(string id)
+        // GET: DisplayPalette/DocList/5
+        public ActionResult DocList(string id)
         {
             /*if (id == null)
              {
@@ -56,6 +56,46 @@ namespace Group4_iCAREAPP.Controllers
             ViewBag.DocTypeList = new SelectList(db.DocumentMetadata.Select(d => d.docType).Distinct().ToList());
             var documentMetadata = db.DocumentMetadata.Include(d => d.iCareWorker).Include(d => d.ModificationHistory);
             return View(documentMetadata.ToList());
+        }
+
+        // Custom action to redirect the "View Details" buttons to the correct type of document
+        public ActionResult RedirectViewDetails(string docID)
+        {
+            if (string.IsNullOrEmpty(docID))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Get document metadata using docID
+            var documentMetadata = db.DocumentMetadata.FirstOrDefault(d => d.docID == docID);
+
+            if (documentMetadata == null)
+            {
+                return HttpNotFound();
+            }
+
+            //DEBUGGING: DELETE LATER!!!
+            System.Diagnostics.Debug.WriteLine($"docType: {documentMetadata.docType}");
+
+
+            // Check the docType and redirect accordingly
+            if (documentMetadata.docType == "PATIENT")
+            {
+                return RedirectToAction("Details", "ManagePatient", new { id = docID });
+            }
+            else if (documentMetadata.docType == "TREATMENT")
+            {
+                return RedirectToAction("Details", "AssignPatient", new { id = docID });
+            }
+            else if (documentMetadata.docType == "UPLOADS")
+            {
+                return RedirectToAction("Details", "ImportImage", new { id = docID });
+            }
+            else
+            {
+                return RedirectToAction("Details", "ManageDocument", new { id = docID });
+            }
+
         }
 
         // GET: DisplayPalette/ChooseDoc

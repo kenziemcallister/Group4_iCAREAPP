@@ -22,6 +22,10 @@ namespace Group4_iCAREAPP.Controllers
             ViewBag.CurrentUser = currentUser;
             ViewBag.CurrentWorker = currentWorker;
 
+            // Check if there is a success message (from after creating a new patient record
+            ViewBag.SuccessMessage = TempData["SuccessMessage"];
+
+
             // Populate Geographical Unit dropdown list
             ViewBag.GeographicalUnitList = new SelectList(db.GeoCodes, "ID", "description");
 

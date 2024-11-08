@@ -23,6 +23,7 @@ namespace Group4_iCAREAPP.Models
     
         public string ID { get; set; }
         public string profession { get; set; }
+        public string WorkerName { get; set; }
         public string creator { get; set; }
         public string userPermission { get; set; }
         public string geographicalUnit { get; set; }

@@ -192,7 +192,14 @@ namespace Group4_iCAREAPP.Controllers
                         // If the user is a worker, store their profession (Nurse or Doctor)
                         else if (worker != null)
                         {
-                            Session["Profession"] = worker.profession;
+                            if (worker.profession == "doctor")
+                            {
+                                Session["Profession"] = "Dr.";
+                            }
+                            else if (worker.profession == "nurse")
+                            {
+                                Session["Profession"] = "Nurse";
+                            }
                         }
                         else
                         {

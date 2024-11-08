@@ -64,9 +64,6 @@ namespace Group4_iCAREAPP.Controllers
                 return HttpNotFound();
             }
 
-            //DEBUGGING: DELETE LATER!!!
-            System.Diagnostics.Debug.WriteLine($"docType: {documentMetadata.docType}");
-
 
             // Check the docType and redirect accordingly
             if (documentMetadata.docType == "PATIENT")

@@ -68,6 +68,14 @@ namespace Group4_iCAREAPP.Controllers
             var userId = User.Identity.Name;
             ViewBag.workerID = userId;
 
+            // Fetch the logged-in user's data
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
+
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
             // filter patient list to only show patients eligible to be assigned to user
             var eligiblePatients = db.PatientRecord
                 .Where(p =>
@@ -148,6 +156,11 @@ namespace Group4_iCAREAPP.Controllers
 
         public ActionResult CreateFromBoard(string id)
         {
+
+            // Get the logged-in user's ID
+            var userId = User.Identity.Name;
+            ViewBag.workerID = userId;
+
             // Ensure the provided patient ID exists
             var patient = db.PatientRecord.FirstOrDefault(p => p.ID == id);
             if (patient == null)
@@ -155,10 +168,7 @@ namespace Group4_iCAREAPP.Controllers
                 return HttpNotFound("Patient not found.");
             }
 
-            // Get the logged-in user's ID
-            var userId = User.Identity.Name;
-            ViewBag.workerID = userId;
-
+            
             // Pass the patient ID directly to the view
             ViewBag.patientIDBoard = id;
 

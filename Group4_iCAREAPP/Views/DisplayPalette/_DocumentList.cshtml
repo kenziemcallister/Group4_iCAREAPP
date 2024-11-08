@@ -1,19 +1,12 @@
 ﻿@model IEnumerable<Group4_iCAREAPP.Models.DocumentMetadata>
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Document List</h2>
-
-<!-- Document Type Filter Dropdown -->
-<label for="docType">Filter by Document Type:</label>
-@Html.DropDownList("docType", (SelectList)ViewBag.DocTypeList, "Select All", new { @class = "form-control", id = "docTypeDropdown" })
-
 <table class="table">
     <tr>
         <th>
             <label>Document Name</label>
+        </th>
+        <th>
+            <label>Author</label>
         </th>
         <th>
             <label>Date of Creation</label>
@@ -48,27 +41,3 @@
         </tr>
     }
 </table>
-
-<p>
-    <button type="button" onclick="location.href='@Url.Action("Index", "DisplayPalette")'">Back</button>
-</p>
-
-@section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#docTypeDropdown').change(function () {
-                var docType = $(this).val();
-                $.ajax({
-                    url: '@Url.Action("FilterByDocType", "DisplayPalette")',
-                    data: { docType: docType },
-                    type: 'GET',
-                    success: function (result) {
-                        $('table').html(result);
-                    }
-                });
-            });
-        });
-    </script>
-}
-

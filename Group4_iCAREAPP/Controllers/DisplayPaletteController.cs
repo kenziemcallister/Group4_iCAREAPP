@@ -44,7 +44,16 @@ namespace Group4_iCAREAPP.Controllers
                  return HttpNotFound();
              }
              return View(documentMetadata); */
+            // Fetch the logged-in user's data
+            var userId = User.Identity.Name; // Adjust this based on how you get the user ID
+            var currentUser = db.iCareUser.FirstOrDefault(u => u.ID == userId);
+            var currentWorker = db.iCareWorker.FirstOrDefault(w => w.ID == userId);
 
+            // Store the user and worker information in the ViewBag for use in the layout
+            ViewBag.CurrentUser = currentUser;
+            ViewBag.CurrentWorker = currentWorker;
+
+            ViewBag.DocTypeList = new SelectList(db.DocumentMetadata.Select(d => d.docType).Distinct().ToList());
             var documentMetadata = db.DocumentMetadata.Include(d => d.iCareWorker).Include(d => d.ModificationHistory);
             return View(documentMetadata.ToList());
         }
@@ -110,6 +119,22 @@ namespace Group4_iCAREAPP.Controllers
             ViewBag.userID = new SelectList(db.iCareWorker, "ID", "ID", documentMetadata.userID);
             ViewBag.docID = new SelectList(db.ModificationHistory, "ID", "description", documentMetadata.docID);
             return View(documentMetadata);
+        }
+
+        // Action for AJAX filtering by docType
+        public ActionResult FilterByDocType(string docType)
+        {
+            // Fetch all documents
+            var documents = db.DocumentMetadata.AsQueryable();
+
+            // Apply filter if docType is provided
+            if (!string.IsNullOrEmpty(docType) && docType != "Select All")
+            {
+                documents = documents.Where(d => d.docType == docType);
+            }
+
+            // Return the filtered documents to the view
+            return PartialView("_DocumentList", documents.ToList());
         }
 
         // POST: DisplayPalette/Edit/5

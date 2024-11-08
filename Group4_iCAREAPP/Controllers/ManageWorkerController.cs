@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using Group4_iCAREAPP.Models; 
 using System.Data.Entity;
 using System.Net;
+using System.Diagnostics;
 
 namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
 {
@@ -37,6 +38,36 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
 
             return View(workers);
         }
+
+        [HttpGet]
+        [Route("ManageWorker/Profile")]
+        public ActionResult Profile()
+        {
+            // Ensure the user is logged in
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "UserAuthentication");
+            }
+
+            var userID = User.Identity.Name; // Get the logged-in user's ID
+
+            // Fetch the worker and user details
+            var worker = db.iCareWorker.Include(w => w.UserRole).Include(w => w.GeoCodes)
+                                       .FirstOrDefault(w => w.ID == userID);
+
+            var user = db.iCareUser.FirstOrDefault(u => u.ID == userID); // Fetch user from iCareUser table
+
+            if (worker == null || user == null)
+            {
+                return HttpNotFound("User or Worker not found");
+            }
+
+            // Pass both worker and user data to the view
+            ViewBag.UserName = user.name; // Assuming the Name field exists in iCareUser
+            return View(worker);
+        }
+
+
 
         // GET: ManageWorker/Details/5
         public ActionResult Details(string id)

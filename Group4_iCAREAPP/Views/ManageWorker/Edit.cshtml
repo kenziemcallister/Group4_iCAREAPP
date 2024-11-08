@@ -10,46 +10,67 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                User ID *
-            </label>
-            <div class="col-md-10">
-                <p>@Model.ID</p>  <!-- Display User ID as text -->
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Profession
-            </label>
-            <div class="col-md-10">
-                @Html.DropDownList("profession", ViewBag.Profession as SelectList, "Select Profession", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.profession, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                User Permission
-            </label>
-            <div class="col-md-10">
-                @Html.DropDownList("userPermission", ViewBag.UserPermission as SelectList, "Select User Permission", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.userPermission, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" value="Save Changes" class="button" />
-                <button type="button" onclick="location.href='@Url.Action("Index", "ManageWorker")'">Back</button>
-            </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            User ID *
+        </label>
+        <div class="col-md-10">
+            <p>@Model.ID</p>  <!-- Display User ID as text -->
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Profession
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("profession", ViewBag.Profession as SelectList, "Select Profession", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.profession, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            User Permission
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("userPermission", ViewBag.UserPermission as SelectList, "Select User Permission", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.userPermission, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Geographical Unit
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("geographicalUnit", ViewBag.GeoCodes as SelectList, "Select GeoCode", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.geographicalUnit, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Creator
+        </label>
+        <div class="col-md-10">
+            <input type="text" name="creator" value="admin" class="form-control" readonly />
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" value="Save Changes" class="button" />
+            <button type="button" onclick="location.href='@Url.Action("Index", "ManageWorker")'">Back</button>
+        </div>
+    </div>
+</div>
 }
 
 @section Scripts {

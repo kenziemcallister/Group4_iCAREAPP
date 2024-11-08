@@ -135,7 +135,6 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
             return View(worker);
         }
 
-        // GET: ManageWorker/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -146,18 +145,22 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
             if (worker == null)
                 return HttpNotFound();
 
-            // Prepare the dropdown lists
-            ViewBag.UserPermission = new SelectList(db.UserRole, "roleID", "roleName", worker.userPermission); // Dropdown for roles
-            ViewBag.Profession = new SelectList(new[] { "Doctor", "Nurse" }, worker.profession); // Dropdown for profession
+            // Prepare dropdown lists
+            ViewBag.UserPermission = new SelectList(db.UserRole, "roleID", "roleName", worker.userPermission);
+            ViewBag.Profession = new SelectList(new[] { "Doctor", "Nurse" }, worker.profession);
+            ViewBag.GeoCodes = new SelectList(db.GeoCodes, "ID", "description", worker.geographicalUnit); // Dropdown for GeoCodes
 
             return View(worker);
         }
 
-        // POST: ManageWorker/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID, profession, userPermission")] iCareWorker worker)
+        public ActionResult Edit([Bind(Include = "ID, profession, userPermission, geographicalUnit, creator")] iCareWorker worker)
         {
+            // Explicitly hardcode the creator to "admin"
+            worker.creator = "admin";
+
             if (ModelState.IsValid)
             {
                 db.Entry(worker).State = EntityState.Modified;
@@ -165,12 +168,14 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
                 return RedirectToAction("Index");
             }
 
-            // Prepare the dropdown lists again in case of errors
+            // Prepare dropdown lists in case of validation errors
             ViewBag.UserPermission = new SelectList(db.UserRole, "roleID", "roleName", worker.userPermission);
             ViewBag.Profession = new SelectList(new[] { "Doctor", "Nurse" }, worker.profession);
+            ViewBag.GeoCodes = new SelectList(db.GeoCodes, "ID", "description", worker.geographicalUnit);
 
             return View(worker);
         }
+
 
 
         // GET: ManageWorker/Delete/5

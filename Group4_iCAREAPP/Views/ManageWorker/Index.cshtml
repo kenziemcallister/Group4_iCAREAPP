@@ -37,9 +37,8 @@
                 @Html.DisplayFor(modelItem => item.userPermission)
             </td>
             <td>
-                <!--@Html.ActionLink("Edit", "Edit", new { id = item.ID }) | -->
-                <!--@Html.ActionLink("Details", "Details", new { id = item.ID }) | -->
-                <!-- @Html.ActionLink("Delete", "Delete", new { id = item.ID }) -->
+                <button type="button" onclick="location.href='@Url.Action("Edit", "ManageWorker", new { id = item.ID })'">Edit Worker</button>
+                <button type="button" onclick="location.href='@Url.Action("Details", "ManageWorker", new { id = item.ID })'">View Details</button>
             </td>
         </tr>
     }

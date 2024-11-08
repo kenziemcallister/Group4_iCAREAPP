@@ -6,6 +6,10 @@
 
 <h2>iCARE Board</h2>
 
+<p>
+    <button type="button" onclick="location.href='@Url.Action("Create", "AssignPatient")'">Assign Patient</button>
+</p>
+
 <!-- Geographical Unit Filter Dropdown -->
 <label for="geographicalUnit">Sort by Geographical Unit:</label>
 @Html.DropDownList("geographicalUnit", (SelectList)ViewBag.GeographicalUnitList, "Select All", new { @class = "form-control", id = "geographicalUnitDropdown" })
@@ -35,7 +39,6 @@
 
 <p>
     <!--<button type="button" onclick="location.href='@Url.Action("Create", "ManageDocument", new { docType = "PATIENT"})'">Create New Patient Record</button> -->
-    <button type="button" onclick="location.href='@Url.Action("Create", "AssignPatient")'">Assign Patient</button>
     <button type="button" onclick="location.href='@Url.Action("Index", "Home")'">Back</button>
 </p>
 

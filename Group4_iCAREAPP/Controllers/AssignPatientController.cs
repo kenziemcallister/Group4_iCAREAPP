@@ -189,9 +189,10 @@ namespace Group4_iCAREAPP.Controllers
                 string docID = Guid.NewGuid().ToString("N").Substring(0, 5);
 
                 var patientRecord = db.PatientRecord.FirstOrDefault(p => p.ID == treatmentRecord.patientID);
+                var workerRecord = db.iCareUser.FirstOrDefault(p => p.ID == User.Identity.Name);
 
                 // auto set the name of the document to be the patient's name:
-                string docName = "Treatment: " + patientRecord.name;
+                string docName = workerRecord.name + "'s Treatment: " + patientRecord.name;
 
                 // create a doc
                 var metadata = new DocumentMetadata
@@ -256,13 +257,16 @@ namespace Group4_iCAREAPP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             TreatmentRecord treatmentRecord = db.TreatmentRecord.Find(id);
             if (treatmentRecord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.workerID = new SelectList(db.iCareWorker, "ID", "ID", treatmentRecord.workerID);
+
+            ViewBag.workerID = treatmentRecord.workerID;   // pass worker ID
             ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
+            ViewBag.docID = treatmentRecord.docID;   // pass document ID
 
             return View(treatmentRecord);
         }
@@ -290,6 +294,7 @@ namespace Group4_iCAREAPP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("DocList", "DisplayPalette");
             }
+
             ViewBag.DrugsList = new SelectList(db.DrugsManagementSystem, "drugID", "drugName");
             return View(treatmentRecord);
         }

@@ -4,56 +4,60 @@
     ViewBag.Title = "Create Treatment Record from Board";
 }
 
-<h2>Create Treatment Record for Patient</h2>
+<h2>Assign to Patient</h2>
 
 @using (Html.BeginForm("CreateFromBoard", "AssignPatient", FormMethod.Post, new { id = "createFromBoardForm" }))
 {
     @Html.AntiForgeryToken()
 
-    <hr />
+    
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div id="responseMessage" class="text-success"></div> <!-- Area for success/error messages -->
 
 
-    <div class="form-horizontal">
-        <hr />
+<div class="form-horizontal">
+    <hr />
 
-        <!-- WORKER -->
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Worker *
-            </label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" value="@ViewBag.workerID" readonly />
-                @Html.HiddenFor(model => model.workerID)
-            </div>
+    <!-- WORKER -->
+    <div class="form-group">
+        <h2></h2>
+        <label class="control-label col-md-2">
+            Worker *
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" value="@ViewBag.workerID" readonly />
+            @Html.HiddenFor(model => model.workerID)
         </div>
+    </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Patient ID *
-            </label>
-            <div class="col-md-10">
-                <!-- Display patient ID as read-only text -->
-                <input type="text" class="form-control" value="@ViewBag.patientIDBoard" readonly />
-                <!-- Hidden field for patientID -->
-                @Html.HiddenFor(model => model.patientID, new { Value = ViewBag.patientIDBoard })
-            </div>
+    <div class="form-group">
+        <h2></h2>
+        <label class="control-label col-md-2">
+            Patient ID *
+        </label>
+        <div class="col-md-10">
+            <!-- Display patient ID as read-only text -->
+            <input type="text" class="form-control" value="@ViewBag.patientIDBoard" readonly />
+            <!-- Hidden field for patientID -->
+            @Html.HiddenFor(model => model.patientID, new { Value = ViewBag.patientIDBoard })
         </div>
+    </div>
 
 
-        <!-- TREATMENT DATE -->
-        <div class="form-group">
-            <label class="control-label col-md-2">
-                Treatment Date *
-            </label>
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.treatmentDate, new { @class = "form-control", type = "date" })
-                @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
-            </div>
+    <!-- TREATMENT DATE -->
+    <div class="form-group">
+        <h2></h2>
+        <label class="control-label col-md-2">
+            Treatment Date *
+        </label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.treatmentDate, new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(model => model.treatmentDate, "", new { @class = "text-danger" })
         </div>
+    </div>
 
+    @*
         <!-- DESCRIPTION -->
         <div class="form-group">
             <label class="control-label col-md-2">
@@ -75,15 +79,17 @@
                 @Html.ValidationMessageFor(model => model.drugID, "", new { @class = "text-danger" })
             </div>
         </div>
+    *@
 
-        <!-- SUBMIT -->
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
-                <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
-            </div>
+    <!-- SUBMIT -->
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
+            <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
         </div>
     </div>
+</div>
 }
 
 @section Scripts {

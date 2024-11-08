@@ -4,15 +4,15 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create Treatment Record</h2>
+<h2>Assign to Patient</h2>
 
 
 @using (Html.BeginForm("Create", "AssignPatient", FormMethod.Post, new { id = "assignPatientForm" }))
 {
     @Html.AntiForgeryToken()
 
-    <h4>TreatmentRecord</h4>
-    <hr />
+    <!-- <h4>TreatmentRecord</h4>
+    <hr /> -->
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div id="responseMessage" class="text-success"></div> <!-- Area for success/error messages -->
@@ -37,6 +37,7 @@
 
         <!-- PATIENT -->
         <div class="form-group">
+            <h2></h2>
             <label class="control-label col-md-2">
                 Patient *
             </label>
@@ -48,6 +49,7 @@
 
         <!-- TREATMENT DATE -->
         <div class="form-group">
+            <h2></h2>
             <label class="control-label col-md-10">
                 Treatment Date *
             </label>
@@ -58,6 +60,7 @@
             </div>
         </div>
 
+        @*
         <!-- DESCRIPTION -->
         <div class="form-group">
             <label class="control-label col-md-2">
@@ -79,11 +82,13 @@
                 @Html.ValidationMessageFor(model => model.drugID, "", new { @class = "text-danger" })
             </div>
         </div>
+        *@
 
+        <br />
         <!-- SUBMIT -->
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <h2></h2>
+            
                 <input type="submit" value="Submit" style="background-color: cornflowerblue; color: floralwhite; font-size: 16px; border-radius: 10px" class="button" />
                 <button type="button" onclick="location.href='@Url.Action("Index", "iCAREBoard")'">Back</button>
             </div>

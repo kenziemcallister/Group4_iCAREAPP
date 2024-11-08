@@ -14,6 +14,17 @@
 <div class="form-horizontal">
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label class="control-label col-md-2">
+            Creator ID *
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" value="@ViewBag.workerID" readonly />
+            @Html.ValidationMessageFor(model => model.creator, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="control-label col-md-2">
             User ID *
@@ -21,6 +32,16 @@
         <div class="col-md-10">
             @Html.DropDownList("ID", ViewBag.UserID as SelectList, "Select User ID", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-10">
+            User Permissions *
+        </label>
+        <div class="col-md-10">
+            @Html.DropDownList("userPermission", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.userPermission, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -34,30 +55,9 @@
         </div>
     </div>
 
-
     <div class="form-group">
         <label class="control-label col-md-2">
-            Creator ID *
-        </label>
-        <div class="col-md-10">
-            @Html.DropDownList("ID", ViewBag.UserID as SelectList, "Select User ID", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.creator, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-10">
-            User Permission Number *
-        </label>
-        <div class="col-md-10">
-            @Html.DropDownList("userPermission", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.userPermission, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">
-            Hospital Unit *
+            Hospital Unit
         </label>
         <div class="col-md-10">
             @Html.DropDownList("geographicalUnit", ViewBag.GeographicalUnit as SelectList, "Select GeoCode", new { @class = "form-control" })

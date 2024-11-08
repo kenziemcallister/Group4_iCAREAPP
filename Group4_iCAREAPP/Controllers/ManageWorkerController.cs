@@ -106,6 +106,7 @@ namespace Group4_iCAREAPP.Controllers // Replace with your actual namespace
                                      .ToList();
 
             // Pass the filtered list of User IDs to the view
+            ViewBag.workerID = userId;
             ViewBag.UserID = new SelectList(unassignedUsers, "ID", "ID"); // Dropdown for unassigned iCareUsers
             ViewBag.UserPermission = new SelectList(db.UserRole, "roleID", "roleName"); // Dropdown for roles
             ViewBag.GeographicalUnit = new SelectList(db.GeoCodes, "ID", "description"); // Dropdown for geographical units
